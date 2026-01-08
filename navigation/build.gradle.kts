@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -44,6 +45,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             // Libraries used
+            implementation(libs.kotlinx.serialization)
+            implementation(libs.compose.navigation)
             // Dependency modules
             implementation(project(path = ":feature:auth"))
 

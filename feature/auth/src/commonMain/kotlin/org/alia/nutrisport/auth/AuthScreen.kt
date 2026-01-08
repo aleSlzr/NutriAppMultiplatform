@@ -24,8 +24,11 @@ import org.alia.nutrisport.shared.Alpha
 import org.alia.nutrisport.shared.BebasNeueFont
 import org.alia.nutrisport.shared.FontSize
 import org.alia.nutrisport.shared.Surface
+import org.alia.nutrisport.shared.SurfaceBrand
+import org.alia.nutrisport.shared.SurfaceError
 import org.alia.nutrisport.shared.TextPrimary
 import org.alia.nutrisport.shared.TextSecondary
+import org.alia.nutrisport.shared.TextWhite
 import rememberMessageBarState
 
 @Composable
@@ -43,6 +46,10 @@ fun AuthScreen() {
                 ),
             messageBarState = messageBarState,
             errorMaxLines = 2,
+            errorContentColor = SurfaceError,
+            errorContainerColor = TextWhite,
+            successContainerColor = SurfaceBrand,
+            successContentColor = TextPrimary,
         ) {
             Column(modifier = Modifier
                 .fillMaxSize()
