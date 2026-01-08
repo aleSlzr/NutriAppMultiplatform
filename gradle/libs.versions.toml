@@ -1,0 +1,94 @@
+[versions]
+agp = "8.11.2"
+android-compileSdk = "36"
+android-minSdk = "24"
+android-targetSdk = "36"
+androidx-activity = "1.12.2"
+androidx-appcompat = "1.7.1"
+androidx-core = "1.17.0"
+androidx-espresso = "3.7.0"
+androidx-lifecycle = "2.9.6"
+androidx-testExt = "1.3.0"
+composeMultiplatform = "1.9.3"
+junit = "4.13.2"
+kotlin = "2.3.0"
+
+splash_version = "1.2.0"
+navigation_version = "2.9.1"
+auth_version = "2.3.1"
+firebase_version = "2.4.0"
+notifier_version = "1.6.1"
+koin_version = "4.1.1"
+serialization_version = "1.9.0"
+coil_version = "3.3.0"
+ktor_version = "3.3.3"
+coroutines_version = "1.10.2"
+messagebar_version = "1.0.9"
+browser_version = "1.4.0"
+google_version = "4.4.4"
+settings_version = "1.3.0"
+material_icons_version = "1.7.3"
+
+[libraries]
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+junit = { module = "junit:junit", version.ref = "junit" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-testExt-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-testExt" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-espresso" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+androidx-lifecycle-viewmodelCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+
+### -- Libraries -- ###
+material-icons-extended = { group = "org.jetbrains.compose.material", name = "material-icons-extended", version.ref = "material_icons_version" }
+
+splash-screen = { module = "androidx.core:core-splashscreen", version.ref = "splash_version" }
+
+compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation_version" }
+
+auth-kmp = { module = "io.github.mirzemehdi:kmpauth-google", version.ref = "auth_version" }
+auth-firebase-kmp = { module = "io.github.mirzemehdi:kmpauth-firebase", version.ref = "auth_version" }
+kmp-notifier = { module = "io.github.mirzemehdi:kmpnotifier", version.ref = "notifier_version" }
+
+firebase-app = { module = "dev.gitlive:firebase-app", version.ref = "firebase_version" }
+firebase-firestore = { module = "dev.gitlive:firebase-firestore", version.ref = "firebase_version" }
+firebase-storage = { module = "dev.gitlive:firebase-storage", version.ref = "firebase_version" }
+firebase-common = { module = "dev.gitlive:firebase-common", version.ref = "firebase_version" }
+
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin_version"}
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin_version"}
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin_version"}
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin_version"}
+
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization_version"}
+
+coil3 = { module = "io.coil-kt.coil3:coil", version.ref = "coil_version" }
+coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil_version" }
+coil3-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil_version" }
+coil3-network = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil_version" }
+
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor_version" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor_version" }
+ktor-client-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor_version" }
+ktor-darwin-client = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor_version" }
+ktor-android-client = { module = "io.ktor:ktor-client-android", version.ref = "ktor_version" }
+
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines_version" }
+
+messagebar_kmp = { module = "com.stevdza-san:messagebarkmp", version.ref = "messagebar_version" }
+browser_kmp = { module = "com.stevdza-san:browser-kmp", version.ref = "browser_version" }
+
+multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "settings_version" }
+multiplatform-settings-no-args = { module = "com.russhwolf:multiplatform-settings-no-args", version.ref = "settings_version" }
+multiplatform-settings-make-observable = { module = "com.russhwolf:multiplatform-settings-make-observable", version.ref = "settings_version" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
+composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google_version" }
