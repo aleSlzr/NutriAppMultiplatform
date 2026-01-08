@@ -3,14 +3,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/splash_ic"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/splash_ic"
         android:supportsRtl="true"
         android:theme="@style/Theme.NutriSport.Splash">
         <activity
             android:exported="true"
-            android:name=".MainActivity">
+            android:name=".MainActivity"
+            android:theme="@style/Theme.NutriSport.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
