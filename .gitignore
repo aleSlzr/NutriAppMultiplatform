@@ -1,32 +1,31 @@
-# ==== Android ==================================================
+# ==== Android / Kotlin / KMP ===================================
 
 # Gradle files
-.gradle
-/build
+.gradle/
+**/build/
 
 # Local configuration file (sdk path, etc)
-/local.properties
 local.properties
 
 # Android Studio generated files and folders
-/captures
+captures/
 .externalNativeBuild
 .cxx
 
-# IntelliJ
-*.iml
-.idea
-.idea/*
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+# Kotlin
+.kotlin/
 
-# Google Services (e.g. APIs or Firebase)
-google-services.json
-moviescompose-abac0-eaabe9c4b5ac.json
+# ==== IntelliJ =================================================
+*.iml
+.idea/
+
+# Secrets / Config (DO NOT COMMIT) ==============================
+*.env
+*.keystore
+
+# Google Services (e.g. APIs or Firebase) =======================
+*google-services*.json
+*GoogleService-Info*.plist
 
 # ==== Fastlane =================================================
 
@@ -34,22 +33,37 @@ moviescompose-abac0-eaabe9c4b5ac.json
 **/fastlane/report.xml
 **/fastlane/.env
 **/fastlane/README.md
+**/fastlane/test_output/
 
 # ==== MacOS ====================================================
 .DS_Store
 
-# ==== iOS ====================================================
+# ==== iOS ======================================================
+xcuserdata/
+DerivedData/
+
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+# Xcode build output
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# Xcode project
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcodeproj/xcshareddata/
-!*.xcodeproj/project.xcworkspace/
+
+# Xcode workspace
+*.xcworkspace/*
 !*.xcworkspace/contents.xcworkspacedata
-**/xcshareddata/WorkspaceSettings.xcsettings
+!*.xcworkspace/xcshareddata/
+
+# Swift Package Manager (iOS side)
+.swiftpm/
+.build/
 
 # ==== Custom ===================================================
-.kotlin
-**/build/
-xcuserdata
-!src/**/build/
-captures
 node_modules/
