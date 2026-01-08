@@ -1,5 +1,6 @@
 package org.alia.nutrisport.auth.component
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
@@ -31,14 +32,11 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import org.alia.nutrisport.shared.FontSize
-import org.alia.nutrisport.shared.Gray
-import org.alia.nutrisport.shared.GrayDarker
 import org.alia.nutrisport.shared.IconSecondary
 import org.alia.nutrisport.shared.Resources
-import org.alia.nutrisport.shared.Surface
+import org.alia.nutrisport.shared.SurfaceDarker
+import org.alia.nutrisport.shared.SurfaceLighter
 import org.alia.nutrisport.shared.TextPrimary
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.vectorResource
 
 @Composable
 fun GoogleButton(
@@ -48,8 +46,8 @@ fun GoogleButton(
     secondaryText: String = "Please wait...",
     icon: ImageVector = Resources.Icon.Google,
     shape: Shape = RoundedCornerShape(size = 99.dp),
-    backgroundColor: Color = Gray,
-    borderColor: Color = GrayDarker,
+    backgroundColor: Color = SurfaceLighter,
+    borderColor: Color = SurfaceDarker,
     progressIndicatorColor: Color = IconSecondary,
     onClick: () -> Unit,
 ) {
@@ -82,21 +80,22 @@ fun GoogleButton(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
-            AnimatedVisibility(visible = !loading) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = "Google logo",
-                )
-            }
-            AnimatedVisibility(
-                visible = loading,
+            AnimatedContent(
+                targetState = loading
             ) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(24.dp),
-                    strokeWidth = 2.dp,
-                    color = progressIndicatorColor,
-                )
+                if (!loading) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = "Google logo",
+                    )
+                } else {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(24.dp),
+                        strokeWidth = 2.dp,
+                        color = progressIndicatorColor,
+                    )
+                }
             }
             Spacer(modifier = Modifier.width(12.dp))
             Text(

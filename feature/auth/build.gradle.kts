@@ -45,6 +45,8 @@ kotlin {
 
             // Libraries used
             implementation(libs.messagebar.kmp)
+            implementation(libs.auth.kmp)
+            implementation(libs.auth.firebase.kmp)
 
             // Dependency modules
             implementation(project(path = ":shared"))
