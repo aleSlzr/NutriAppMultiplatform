@@ -43,6 +43,7 @@ kotlin {
             // Dependency modules
             implementation(project(path = ":feature:auth"))
             implementation(project(path = ":feature:home"))
+            implementation(project(path = ":shared"))
 
         }
         commonTest.dependencies {

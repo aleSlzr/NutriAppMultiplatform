@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.alia.nutrisport.auth.AuthScreen
+import org.alia.nutrisport.shared.navigation.Screen
 import org.aliaslzr.nutrisport.home.HomeGraphScreen
 
 @Composable
