@@ -29,10 +29,12 @@ import org.alia.nutrisport.shared.SurfaceError
 import org.alia.nutrisport.shared.TextPrimary
 import org.alia.nutrisport.shared.TextSecondary
 import org.alia.nutrisport.shared.TextWhite
+import org.koin.compose.viewmodel.koinViewModel
 import rememberMessageBarState
 
 @Composable
 fun AuthScreen() {
+    val viewModel = koinViewModel<AuthViewModel>()
     val messageBarState = rememberMessageBarState()
     var loadingState by remember { mutableStateOf(false) }
 
@@ -82,7 +84,11 @@ fun AuthScreen() {
                     linkAccount = false,
                     onResult = { result ->
                         result.onSuccess { user ->
-                            messageBarState.addSuccess("Authentication successful!")
+                            viewModel.createCustomer(
+                                user = user,
+                                onSuccess = { messageBarState.addSuccess("Authentication successful!") },
+                                onError = { errorMessage -> messageBarState.addError(errorMessage) }
+                            )
                             loadingState = false
                         }.onFailure { error ->
                             if (error.message?.contains("A network error") == true) {

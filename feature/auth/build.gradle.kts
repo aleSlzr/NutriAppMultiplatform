@@ -38,11 +38,16 @@ kotlin {
 
             // Libraries used
             implementation(libs.messagebar.kmp)
+
             implementation(libs.auth.kmp)
             implementation(libs.auth.firebase.kmp)
 
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+
             // Dependency modules
             implementation(project(path = ":shared"))
+            implementation(project(path = ":data"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
