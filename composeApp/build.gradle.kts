@@ -52,10 +52,13 @@ kotlin {
             implementation(libs.auth.kmp)
             implementation(libs.firebase.app)
 
+            implementation(libs.koin.compose)
+
             // Dependency modules
             implementation(project(path = ":navigation"))
             implementation(project(path = ":shared"))
             implementation(project(path = ":di"))
+            implementation(project(path = ":data"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

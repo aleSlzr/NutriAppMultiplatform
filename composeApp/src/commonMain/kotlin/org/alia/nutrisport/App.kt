@@ -12,15 +12,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.mmk.kmpauth.google.GoogleAuthCredentials
 import com.mmk.kmpauth.google.GoogleAuthProvider
-import org.alia.nutrisport.navigation.SetUpNavGraph
+import org.alia.nutrisport.data.domain.CustomerRepository
+import org.alia.nutrisport.navigation.NavGraph
+import org.alia.nutrisport.navigation.Screen
 import org.alia.nutrisport.shared.Constants
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
+        val customerRepository = koinInject<CustomerRepository>()
         var appReady by remember { mutableStateOf(false) }
+        val isUserAuthenticated = remember { customerRepository.getCurrentUserId() != null }
+        val startDestination = remember {
+            if (isUserAuthenticated) Screen.HomeGraph
+            else Screen.Auth
+        }
 
         LaunchedEffect(Unit) {
             GoogleAuthProvider.create(
@@ -33,7 +42,9 @@ fun App() {
             modifier = Modifier.fillMaxSize(),
             visible = appReady
         ) {
-            SetUpNavGraph()
+            NavGraph(
+                startDestination = startDestination
+            )
         }
     }
 }

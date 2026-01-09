@@ -2,11 +2,16 @@ package org.alia.nutrisport.data
 
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseUser
+import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.firestore.firestore
 import org.alia.nutrisport.data.domain.CustomerRepository
 import org.alia.nutrisport.shared.domain.Customer
 
 class CustomerRepositoryImpl: CustomerRepository {
+    override fun getCurrentUserId(): String? {
+        return Firebase.auth.currentUser?.uid
+    }
+
     override suspend fun createCustomer(
         user: FirebaseUser?,
         onSuccess: () -> Unit,
