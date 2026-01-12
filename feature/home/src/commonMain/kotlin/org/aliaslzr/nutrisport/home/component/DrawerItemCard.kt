@@ -27,12 +27,12 @@ fun DrawerItemCard(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable{ onClick() }
             .clip(RoundedCornerShape(size = 99.dp))
             .padding(
                 vertical = 12.dp,
                 horizontal = 12.dp
-            ),
+            )
+            .clickable{ onClick() },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(

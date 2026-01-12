@@ -1,7 +1,6 @@
 package org.alia.nutrisport.auth.component
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.border
@@ -31,10 +30,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import org.alia.nutrisport.shared.BorderIdle
 import org.alia.nutrisport.shared.FontSize
 import org.alia.nutrisport.shared.IconSecondary
 import org.alia.nutrisport.shared.Resources
-import org.alia.nutrisport.shared.SurfaceDarker
 import org.alia.nutrisport.shared.SurfaceLighter
 import org.alia.nutrisport.shared.TextPrimary
 
@@ -47,7 +46,7 @@ fun GoogleButton(
     icon: ImageVector = Resources.Icon.Google,
     shape: Shape = RoundedCornerShape(size = 99.dp),
     backgroundColor: Color = SurfaceLighter,
-    borderColor: Color = SurfaceDarker,
+    borderColor: Color = BorderIdle,
     progressIndicatorColor: Color = IconSecondary,
     onClick: () -> Unit,
 ) {
