@@ -1,30 +1,35 @@
 package org.alia.nutrisport.profile
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import org.alia.nutrisport.shared.Resources
-import org.alia.nutrisport.shared.component.PrimaryButton
+import org.alia.nutrisport.shared.Surface
+import org.alia.nutrisport.shared.component.ProfileForm
 
 @Composable
 fun ProfileScreen() {
-    Column(
+    Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .background(Surface)
+            .systemBarsPadding(),
     ) {
-        PrimaryButton(
-            text = "Continue",
-            icon = Resources.Icon.CheckMark,
-            enabled = false,
-            onClick = {}
+        ProfileForm(
+            modifier = Modifier,
+            firstName = "Alejandro",
+            onFirstNameChange = {  },
+            lastName = "",
+            onLastNameChange = {  },
+            email = "someEmail@google.com",
+            city = "",
+            onCityChange = {  },
+            postalCode = null,
+            onPostalCodeChange = {  },
+            address = "",
+            onAddressChange = {  },
+            phoneNumber = null,
+            onPhoneNumberChange = {  }
         )
     }
 }
