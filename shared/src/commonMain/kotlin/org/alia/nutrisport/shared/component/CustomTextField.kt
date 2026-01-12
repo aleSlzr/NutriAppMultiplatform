@@ -62,11 +62,14 @@ fun CustomTextField(
         shape = RoundedCornerShape(size = 6.dp),
         keyboardOptions = keyboardOptions,
         colors = TextFieldDefaults.colors(
-            disabledTextColor = TextPrimary.copy(alpha = Alpha.DISABLED),
+            unfocusedContainerColor = SurfaceLighter,
             focusedContainerColor = SurfaceLighter,
-            disabledContainerColor = SurfaceLighter,
-            errorContainerColor = SurfaceLighter,
-            unfocusedTextColor = SurfaceLighter,
+            focusedTextColor = TextPrimary,
+            unfocusedTextColor = TextPrimary,
+            disabledTextColor = TextPrimary.copy(alpha = Alpha.DISABLED),
+            focusedPlaceholderColor = TextPrimary.copy(alpha = Alpha.HALF),
+            unfocusedPlaceholderColor = TextPrimary.copy(alpha = Alpha.HALF),
+            disabledPlaceholderColor = TextPrimary.copy(alpha = Alpha.DISABLED),
         )
     )
 }
