@@ -24,6 +24,13 @@ import androidx.compose.material.icons.filled.VerticalSplit
 import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.ShoppingCart
+import nutrisport.shared.generated.resources.Res
+import nutrisport.shared.generated.resources.argentina
+import nutrisport.shared.generated.resources.bhutan
+import nutrisport.shared.generated.resources.brazil
+import nutrisport.shared.generated.resources.canada
+import nutrisport.shared.generated.resources.mexico
+import nutrisport.shared.generated.resources.united_states
 
 object Resources {
     object Icon {
@@ -53,5 +60,13 @@ object Resources {
     }
     object Image {
 
+    }
+    object Flag {
+        val Mexico = Res.drawable.mexico
+        val USA = Res.drawable.united_states
+        val Canada = Res.drawable.canada
+        val Argentina = Res.drawable.argentina
+        val Brazil = Res.drawable.brazil
+        val Bhutan = Res.drawable.bhutan
     }
 }

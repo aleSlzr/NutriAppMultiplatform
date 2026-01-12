@@ -119,7 +119,7 @@ fun HomeGraphScreen(
             .background(animatedBackground)
     ) {
         CustomDrawer(
-            onProfileClick = { navigateToProfile() },
+            onProfileClick = navigateToProfile,
             onContactUsClick = {},
             onSignOutClick = {
                 viewModel.signOut(
