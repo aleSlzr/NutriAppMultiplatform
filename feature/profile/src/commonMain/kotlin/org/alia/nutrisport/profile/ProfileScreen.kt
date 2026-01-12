@@ -4,12 +4,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import org.alia.nutrisport.shared.Surface
 import org.alia.nutrisport.shared.component.ProfileForm
+import org.alia.nutrisport.shared.domain.Country
 
 @Composable
 fun ProfileScreen() {
+    var country by remember { mutableStateOf(Country.Mexico) }
     Box(
         modifier = Modifier
             .background(Surface)
@@ -18,18 +24,22 @@ fun ProfileScreen() {
         ProfileForm(
             modifier = Modifier,
             firstName = "Alejandro",
-            onFirstNameChange = {  },
+            onFirstNameChange = { },
             lastName = "",
-            onLastNameChange = {  },
+            onLastNameChange = { },
             email = "someEmail@google.com",
+            country = country,
+            onCountrySelect = { selectedCountry ->
+                country = selectedCountry
+            },
             city = "",
-            onCityChange = {  },
+            onCityChange = { },
             postalCode = null,
-            onPostalCodeChange = {  },
+            onPostalCodeChange = { },
             address = "",
-            onAddressChange = {  },
+            onAddressChange = { },
             phoneNumber = null,
-            onPhoneNumberChange = {  }
+            onPhoneNumberChange = { },
         )
     }
 }

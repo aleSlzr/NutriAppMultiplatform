@@ -50,6 +50,7 @@ import org.alia.nutrisport.shared.SurfaceSecondary
 import org.alia.nutrisport.shared.TextPrimary
 import org.alia.nutrisport.shared.TextSecondary
 import org.alia.nutrisport.shared.component.CustomTextField
+import org.alia.nutrisport.shared.component.ErrorCard
 import org.alia.nutrisport.shared.domain.Country
 import org.jetbrains.compose.resources.painterResource
 
@@ -102,22 +103,29 @@ fun CountryPickerDialog(
                     placeholder = "Dial Code"
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                LazyColumn(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    items(
-                        items = filteredCountries,
-                        key = { it.ordinal }
-                    ) { countryItem ->
-                        CountryPicker(
-                            country = countryItem,
-                            isSelected = selectedCountry == countryItem,
-                            onSelect = {
-                                selectedCountry = countryItem
-                            }
-                        )
+                if (filteredCountries.isNotEmpty()) {
+                    LazyColumn(
+                        modifier = Modifier.weight(1f),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        items(
+                            items = filteredCountries,
+                            key = { it.ordinal }
+                        ) { countryItem ->
+                            CountryPicker(
+                                country = countryItem,
+                                isSelected = selectedCountry == countryItem,
+                                onSelect = {
+                                    selectedCountry = countryItem
+                                }
+                            )
+                        }
                     }
+                } else {
+                    ErrorCard(
+                        modifier = Modifier.weight(1f),
+                        message = "Dial code not found."
+                    )
                 }
             }
         },
