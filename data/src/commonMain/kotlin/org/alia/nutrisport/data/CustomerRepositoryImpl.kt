@@ -6,6 +6,7 @@ import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.firestore.firestore
 import org.alia.nutrisport.data.domain.CustomerRepository
 import org.alia.nutrisport.shared.domain.Customer
+import org.alia.nutrisport.shared.util.RequestState
 
 class CustomerRepositoryImpl: CustomerRepository {
     override fun getCurrentUserId(): String? {
@@ -38,6 +39,15 @@ class CustomerRepositoryImpl: CustomerRepository {
             }
         } catch (e: Exception) {
             onError("Error creating a customer: ${e.message}")
+        }
+    }
+
+    override suspend fun signOut(): RequestState<Unit> {
+        return try {
+            Firebase.auth.signOut()
+            RequestState.Success(data = Unit)
+        } catch (e: Exception) {
+            RequestState.Error("Error while signin out: ${e.message}")
         }
     }
 }

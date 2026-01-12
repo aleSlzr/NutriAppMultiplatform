@@ -1,6 +1,7 @@
 package org.alia.nutrisport.data.domain
 
 import dev.gitlive.firebase.auth.FirebaseUser
+import org.alia.nutrisport.shared.util.RequestState
 
 interface CustomerRepository {
     fun getCurrentUserId(): String?
@@ -9,4 +10,5 @@ interface CustomerRepository {
         onSuccess: () -> Unit,
         onError: (String) -> Unit,
     )
+    suspend fun signOut(): RequestState<Unit>
 }

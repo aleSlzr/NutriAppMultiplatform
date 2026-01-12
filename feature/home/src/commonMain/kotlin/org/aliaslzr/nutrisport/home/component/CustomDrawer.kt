@@ -22,9 +22,9 @@ import org.aliaslzr.nutrisport.home.domain.DrawerItem
 @Composable
 fun CustomDrawer(
     onProfileClick: () -> Unit,
-    onContactUs: () -> Unit,
-    onSignOut: () -> Unit,
-    onAdminPanel: () -> Unit,
+    onContactUsClick: () -> Unit,
+    onSignOutClick: () -> Unit,
+    onAdminPanelClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -55,8 +55,8 @@ fun CustomDrawer(
                 onClick = {
                     when(item) {
                         DrawerItem.Profile -> onProfileClick()
-                        DrawerItem.Contact -> onContactUs()
-                        DrawerItem.SignOut -> onSignOut()
+                        DrawerItem.Contact -> onContactUsClick()
+                        DrawerItem.SignOut -> onSignOutClick()
                         else -> {}
                     }
                 },
@@ -67,7 +67,7 @@ fun CustomDrawer(
         DrawerItemCard(
             drawerItem = DrawerItem.Admin,
             onClick = {
-                onAdminPanel()
+                onAdminPanelClick()
             },
         )
         Spacer(modifier = Modifier.height(24.dp))
