@@ -39,6 +39,7 @@ kotlin {
             // Libraries used
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+            implementation(libs.compose.navigation)
 
             // Dependency modules
             implementation(project(path = ":shared"))
