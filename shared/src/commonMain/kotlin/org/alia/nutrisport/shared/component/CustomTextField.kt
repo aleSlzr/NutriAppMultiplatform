@@ -1,4 +1,4 @@
-package org.alia.nutrisport.profile.component
+package org.alia.nutrisport.shared.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.border
