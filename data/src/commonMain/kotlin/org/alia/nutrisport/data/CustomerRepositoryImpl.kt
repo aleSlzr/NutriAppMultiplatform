@@ -4,6 +4,9 @@ import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseUser
 import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.firestore.firestore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
 import org.alia.nutrisport.data.domain.CustomerRepository
 import org.alia.nutrisport.shared.domain.Customer
 import org.alia.nutrisport.shared.util.RequestState
@@ -42,12 +45,47 @@ class CustomerRepositoryImpl: CustomerRepository {
         }
     }
 
+    override fun readCustomerFlow(): Flow<RequestState<Customer>> = channelFlow {
+        try {
+            val userId = getCurrentUserId()
+            if (userId != null) {
+                val database = Firebase.firestore
+                database
+                    .collection(collectionPath = "customer")
+                    .document(userId)
+                    .snapshots
+                    .collectLatest { document ->
+                        if (document.exists) {
+                            val customer = Customer(
+                                id = document.id,
+                                firstName = document.get(field = "firstName"),
+                                lastName = document.get(field = "lastName"),
+                                email = document.get(field = "email"),
+                                city = document.get(field = "city"),
+                                postalCode = document.get(field = "postalCode"),
+                                address = document.get(field = "address"),
+                                phoneNumber = document.get(field = "phoneNumber"),
+                                cart = document.get(field = "cart"),
+                            )
+                            send(RequestState.Success(data = customer))
+                        } else {
+                            send(RequestState.Error(message = "Queried customer document does not exists."))
+                        }
+                    }
+            } else {
+                send(RequestState.Error(message = "User is not available."))
+            }
+        } catch (e: Exception) {
+            send(RequestState.Error(message = "Error while reading a Customer information: ${e.message}"))
+        }
+    }
+
     override suspend fun signOut(): RequestState<Unit> {
         return try {
             Firebase.auth.signOut()
             RequestState.Success(data = Unit)
         } catch (e: Exception) {
-            RequestState.Error("Error while signin out: ${e.message}")
+            RequestState.Error(message = "Error while signin out: ${e.message}")
         }
     }
 }
