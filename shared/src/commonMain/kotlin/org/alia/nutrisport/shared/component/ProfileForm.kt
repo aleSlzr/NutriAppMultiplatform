@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import org.alia.nutrisport.shared.component.dialog.CountryPickerDialog
 import org.alia.nutrisport.shared.domain.Country
@@ -90,7 +92,10 @@ fun ProfileForm(
             value = "${postalCode ?: ""}",
             onValueChange = { onPostalCodeChange(it.toIntOrNull()) },
             placeholder = "Postal code",
-            error = postalCode.toString().length !in 3..8,
+            error = postalCode == null || postalCode.toString().length !in 3..8,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+            )
         )
         CustomTextField(
             value = address,
@@ -112,7 +117,10 @@ fun ProfileForm(
                 value = phoneNumber ?: "",
                 onValueChange = onPhoneNumberChange,
                 placeholder = "Phone number",
-                error = phoneNumber.toString().length !in 3..30,
+                error = phoneNumber == null || phoneNumber.length !in 3..30,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                )
             )
         }
     }
