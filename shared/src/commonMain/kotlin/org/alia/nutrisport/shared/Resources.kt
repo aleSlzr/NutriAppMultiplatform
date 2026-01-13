@@ -29,6 +29,9 @@ import nutrisport.shared.generated.resources.argentina
 import nutrisport.shared.generated.resources.bhutan
 import nutrisport.shared.generated.resources.brazil
 import nutrisport.shared.generated.resources.canada
+import nutrisport.shared.generated.resources.icon_cart
+import nutrisport.shared.generated.resources.icon_cat
+import nutrisport.shared.generated.resources.icon_success
 import nutrisport.shared.generated.resources.mexico
 import nutrisport.shared.generated.resources.united_states
 
@@ -59,7 +62,9 @@ object Resources {
         val PayPal = Icons.Default.Park
     }
     object Image {
-
+        val Cat = Res.drawable.icon_cat
+        val Cart = Res.drawable.icon_cart
+        val Success = Res.drawable.icon_success
     }
     object Flag {
         val Mexico = Res.drawable.mexico

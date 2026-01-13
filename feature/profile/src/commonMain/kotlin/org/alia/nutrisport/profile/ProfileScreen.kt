@@ -22,7 +22,7 @@ import org.alia.nutrisport.shared.IconPrimary
 import org.alia.nutrisport.shared.Resources
 import org.alia.nutrisport.shared.Surface
 import org.alia.nutrisport.shared.TextPrimary
-import org.alia.nutrisport.shared.component.ErrorCard
+import org.alia.nutrisport.shared.component.InfoCard
 import org.alia.nutrisport.shared.component.LoadingCard
 import org.alia.nutrisport.shared.component.PrimaryButton
 import org.alia.nutrisport.shared.component.ProfileForm
@@ -96,10 +96,10 @@ fun ProfileScreen(
                         LoadingCard(modifier = Modifier.fillMaxSize())
                     },
                     onError = { message ->
-                        ErrorCard(
-                            modifier = Modifier.fillMaxSize(),
-                            message = message,
-                            fontSize = FontSize.REGULAR,
+                        InfoCard(
+                            image = Resources.Image.Cat,
+                            title = "Oops!",
+                            subtitle = message,
                         )
                     },
                     onSuccess = {
