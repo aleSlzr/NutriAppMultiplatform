@@ -22,6 +22,7 @@ import org.alia.nutrisport.shared.TextPrimary
 @Composable
 fun AdminPanelScreen(
     navigateBack: () -> Unit,
+    navigateToManageProduct: (String?) -> Unit,
 ) {
     Scaffold(
         contentColor = Surface,
@@ -64,7 +65,7 @@ fun AdminPanelScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {},
+                onClick = { navigateToManageProduct(null) },
                 containerColor = ButtonPrimary,
                 contentColor = IconPrimary,
                 content = {

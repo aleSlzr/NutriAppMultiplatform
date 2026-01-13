@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -21,12 +20,18 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "navigation"
+            baseName = "manage_product"
             isStatic = true
         }
     }
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.ktor.android.client)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.darwin.client)
+        }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -38,16 +43,19 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             // Libraries used
-            implementation(libs.kotlinx.serialization)
-            implementation(libs.compose.navigation)
-            // Dependency modules
-            implementation(project(path = ":feature:auth"))
-            implementation(project(path = ":feature:home"))
-            implementation(project(path = ":feature:profile"))
-            implementation(project(path = ":feature:admin_panel"))
-            implementation(project(path = ":feature:admin_panel:manage_product"))
-            implementation(project(path = ":shared"))
+            implementation(libs.messagebar.kmp)
 
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+
+            implementation(libs.coil3)
+            implementation(libs.coil3.compose)
+            implementation(libs.coil3.compose.core)
+            implementation(libs.coil3.network.ktor)
+
+            // Dependency modules
+            implementation(project(path = ":shared"))
+            implementation(project(path = ":data"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -56,7 +64,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.alia.nutrisport.navigation"
+    namespace = "org.alia.nutrisport.manage_product"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
