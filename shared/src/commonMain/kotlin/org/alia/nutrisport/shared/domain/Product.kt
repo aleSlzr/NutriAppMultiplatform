@@ -7,10 +7,12 @@ import org.alia.nutrisport.shared.CategoryGreen
 import org.alia.nutrisport.shared.CategoryPurple
 import org.alia.nutrisport.shared.CategoryRed
 import org.alia.nutrisport.shared.CategoryYellow
+import kotlin.time.Clock
 
 @Serializable
 data class Product(
     val id: String,
+    val createdAt: Long = Clock.System.now().toEpochMilliseconds(),
     val title: String,
     val description: String,
     val thumbnail: String,
