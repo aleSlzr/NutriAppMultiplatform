@@ -9,7 +9,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.GifBox
 import androidx.compose.material.icons.filled.Lock
@@ -21,8 +20,8 @@ import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.VerticalSplit
-import androidx.compose.material.icons.outlined.Balance
 import androidx.compose.material.icons.outlined.Category
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Scale
 import androidx.compose.material.icons.outlined.ShoppingCart
@@ -59,7 +58,7 @@ object Resources {
         val Close = Icons.Default.Close
         val Book = Icons.Default.Book
         val VerticalMenu = Icons.Default.VerticalSplit
-        val Delete = Icons.Default.Delete
+        val Delete = Icons.Outlined.Delete
         val Google = Icons.Default.GifBox
         val PayPal = Icons.Default.Park
         val Weight = Icons.Outlined.Scale

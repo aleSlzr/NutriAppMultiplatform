@@ -178,7 +178,7 @@ class ManageProductViewModel(
                 }
 
                 productId.takeIf { it.isNotEmpty() }?.let { id ->
-                    adminRepository.updateImageThumbnail(
+                    adminRepository.updateProductImageThumbnail(
                         productId = id,
                         downloadUrl = downloadUrl,
                         onSuccess = {
@@ -211,7 +211,7 @@ class ManageProductViewModel(
                 onSuccess = {
                     productId.takeIf { it.isNotEmpty() }?.let { id ->
                         viewModelScope.launch {
-                            adminRepository.updateImageThumbnail(
+                            adminRepository.updateProductImageThumbnail(
                                 productId = id,
                                 downloadUrl = "",
                                 onSuccess = {
@@ -230,6 +230,27 @@ class ManageProductViewModel(
                 },
                 onError = onError,
             )
+        }
+    }
+
+    fun deleteProduct(
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit,
+    ) {
+        productId.takeIf { it.isNotEmpty() }?.let { id ->
+            viewModelScope.launch {
+                adminRepository.deleteProduct(
+                    productId = id,
+                    onSuccess = {
+                        deleteThumbnailFromStorage(
+                            onSuccess = {},
+                            onError = {}
+                        )
+                        onSuccess()
+                    },
+                    onError = { message -> onError(message) }
+                )
+            }
         }
     }
 }

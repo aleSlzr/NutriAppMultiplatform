@@ -145,7 +145,7 @@ class AdminRepositoryImpl : AdminRepository {
         }
     }
 
-    override suspend fun updateImageThumbnail(
+    override suspend fun updateProductImageThumbnail(
         productId: String,
         downloadUrl: String,
         onSuccess: () -> Unit,
@@ -200,7 +200,36 @@ class AdminRepositoryImpl : AdminRepository {
                 onError("User is not available.")
             }
         } catch (e: Exception) {
-            onError("Error while updating a thumbnail image: ${e.message}")
+            onError("Error while updating product: ${e.message}")
+        }
+    }
+
+    override suspend fun deleteProduct(
+        productId: String,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        try {
+            val userId = getCurrentUserId()
+            if (userId != null) {
+                val database = Firebase.firestore
+                val productCollection = database.collection(collectionPath = "product")
+                val existingProduct = productCollection
+                    .document(productId)
+                    .get()
+                if (existingProduct.exists) {
+                    productCollection
+                        .document(productId)
+                        .delete()
+                    onSuccess()
+                } else {
+                    onError("Selected Product not found.")
+                }
+            } else {
+                onError("User is not available.")
+            }
+        } catch (e: Exception) {
+            onError("Error while deleting product: ${e.message}")
         }
     }
 
