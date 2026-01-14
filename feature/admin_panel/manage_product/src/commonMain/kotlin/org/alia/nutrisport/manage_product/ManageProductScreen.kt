@@ -4,10 +4,12 @@ import ContentWithMessageBar
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
@@ -17,11 +19,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -32,8 +36,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import org.alia.nutrisport.manage_product.util.PhotoPicker
 import org.alia.nutrisport.shared.BebasNeueFont
 import org.alia.nutrisport.shared.BorderIdle
 import org.alia.nutrisport.shared.FontSize
@@ -42,11 +53,17 @@ import org.alia.nutrisport.shared.Resources
 import org.alia.nutrisport.shared.Surface
 import org.alia.nutrisport.shared.SurfaceLighter
 import org.alia.nutrisport.shared.TextPrimary
+import org.alia.nutrisport.shared.TextSecondary
 import org.alia.nutrisport.shared.component.AlertTextField
 import org.alia.nutrisport.shared.component.CustomTextField
+import org.alia.nutrisport.shared.component.ErrorCard
+import org.alia.nutrisport.shared.component.LoadingCard
 import org.alia.nutrisport.shared.component.PrimaryButton
 import org.alia.nutrisport.shared.component.dialog.CategoriesDialog
 import org.alia.nutrisport.shared.domain.ProductCategory
+import org.alia.nutrisport.shared.util.DisplayResult
+import org.alia.nutrisport.shared.util.RequestState
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import rememberMessageBarState
 
@@ -60,7 +77,19 @@ fun ManageProductScreen(
     val viewModel = koinViewModel<ManageProductViewModel>()
     val screenState = viewModel.screenState
     val isFormValid = viewModel.isFormValid
+    val thumbnailUploaderState = viewModel.thumbnailUploaderState
     var showCategoriesDialog by remember { mutableStateOf(false) }
+
+    val photoPicker = koinInject<PhotoPicker>()
+
+    photoPicker.initializePhotoPicker(
+        onImageSelect = { file ->
+            viewModel.uploadThumbnailToStorage(
+                file = file,
+                onSuccess = { messageBarState.addSuccess("Thumbnail uploaded successfully!") }
+            )
+        }
+    )
 
     AnimatedVisibility(
         visible = showCategoriesDialog,
@@ -141,14 +170,61 @@ fun ManageProductScreen(
                                 color = BorderIdle,
                                 shape = RoundedCornerShape(12.dp)
                             )
-                            .background(SurfaceLighter),
+                            .background(SurfaceLighter)
+                            .clickable(
+                                enabled = thumbnailUploaderState.isIdle()
+                            ) {
+                                photoPicker.open()
+                            },
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            modifier = Modifier.size(24.dp),
-                            imageVector = Resources.Icon.Plus,
-                            contentDescription = "Plus icon",
-                            tint = IconPrimary,
+                        thumbnailUploaderState.DisplayResult(
+                            onIdle = {
+                                Icon(
+                                    modifier = Modifier.size(24.dp),
+                                    imageVector = Resources.Icon.Plus,
+                                    contentDescription = "Plus icon",
+                                    tint = IconPrimary,
+                                )
+                            },
+                            onLoading = {
+                                LoadingCard(modifier = Modifier.fillMaxSize())
+                            },
+                            onError = { message ->
+                                Column(
+                                    modifier = Modifier.fillMaxSize(),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    ErrorCard(message = message)
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    TextButton(
+                                        onClick = {
+                                            viewModel.updateThumbnailUploaderState(RequestState.Idle)
+                                        },
+                                        colors = ButtonDefaults.textButtonColors(
+                                            containerColor = Color.Transparent,
+                                        )
+                                    ) {
+                                        Text(
+                                            text = "Try again",
+                                            fontSize = FontSize.SMALL,
+                                            color = TextSecondary
+                                        )
+                                    }
+                                }
+                            },
+                            onSuccess = {
+                                AsyncImage(
+                                    modifier = Modifier.fillMaxSize(),
+                                    model = ImageRequest.Builder(LocalPlatformContext.current)
+                                        .data(screenState.thumbnail)
+                                        .crossfade(enable = true)
+                                        .build(),
+                                    contentDescription = "Product thumbnail image",
+                                    contentScale = ContentScale.Crop,
+                                )
+                            },
                         )
                     }
                     CustomTextField(

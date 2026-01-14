@@ -38,6 +38,7 @@ kotlin {
 
             // Libraries used
             implementation(libs.firebase.firestore)
+            implementation(libs.firebase.storage)
             implementation(libs.auth.firebase.kmp)
 
             // Dependency modules

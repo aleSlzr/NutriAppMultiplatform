@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import org.alia.nutrisport.shared.FontSize
+import org.alia.nutrisport.shared.TextPrimary
 
 @Composable
 fun ErrorCard(
@@ -25,6 +26,7 @@ fun ErrorCard(
             text = message,
             fontSize = fontSize,
             textAlign = TextAlign.Center,
+            color = TextPrimary,
         )
     }
 }
