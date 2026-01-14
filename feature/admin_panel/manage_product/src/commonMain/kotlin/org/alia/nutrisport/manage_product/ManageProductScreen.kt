@@ -279,21 +279,25 @@ fun ManageProductScreen(
                         text = screenState.category.title,
                         onClick = { showCategoriesDialog = true },
                     )
-                    CustomTextField(
-                        value = "${screenState.weight ?: ""}",
-                        onValueChange = {
-                            viewModel.updateWeight(it.toIntOrNull() ?: 0)
-                        },
-                        placeholder = "Weight (Optional)",
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
+                    AnimatedVisibility(
+                        visible = screenState.category != ProductCategory.Accessories
+                    ) {
+                        CustomTextField(
+                            value = "${screenState.weight ?: ""}",
+                            onValueChange = {
+                                viewModel.updateWeight(it.toIntOrNull() ?: 0)
+                            },
+                            placeholder = "Weight",
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                            )
                         )
-                    )
-                    CustomTextField(
-                        value = screenState.flavors ?: "",
-                        onValueChange = viewModel::updateFlavors,
-                        placeholder = "Flavors (Optional)",
-                    )
+                        CustomTextField(
+                            value = screenState.flavors ?: "",
+                            onValueChange = viewModel::updateFlavors,
+                            placeholder = "Flavors",
+                        )
+                    }
                     CustomTextField(
                         value = "${screenState.price}",
                         onValueChange = { value ->
