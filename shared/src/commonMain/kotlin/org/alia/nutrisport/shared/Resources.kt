@@ -21,8 +21,10 @@ import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.VerticalSplit
+import androidx.compose.material.icons.outlined.Balance
 import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Scale
 import androidx.compose.material.icons.outlined.ShoppingCart
 import nutrisport.shared.generated.resources.Res
 import nutrisport.shared.generated.resources.argentina
@@ -60,6 +62,7 @@ object Resources {
         val Delete = Icons.Default.Delete
         val Google = Icons.Default.GifBox
         val PayPal = Icons.Default.Park
+        val Weight = Icons.Outlined.Scale
     }
     object Image {
         val Cat = Res.drawable.icon_cat
