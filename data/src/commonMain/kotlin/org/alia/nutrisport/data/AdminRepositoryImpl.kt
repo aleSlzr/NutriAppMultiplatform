@@ -109,6 +109,42 @@ class AdminRepositoryImpl : AdminRepository {
         }
     }
 
+    override suspend fun readProductById(productId: String): RequestState<Product> {
+        return try {
+            val userId = getCurrentUserId()
+            if (userId != null) {
+                val database = Firebase.firestore
+                val productDocument = database
+                    .collection(collectionPath = "product")
+                    .document(productId)
+                    .get()
+                if (productDocument.exists) {
+                    val product = Product(
+                        id = productDocument.id,
+                        createdAt = productDocument.get(field = "createdAt"),
+                        title = productDocument.get(field = "title"),
+                        description = productDocument.get(field = "description"),
+                        thumbnail = productDocument.get(field = "thumbnail"),
+                        category = productDocument.get(field = "category"),
+                        flavors = productDocument.get(field = "flavors"),
+                        weight = productDocument.get(field = "weight"),
+                        price = productDocument.get(field = "price"),
+                        isPopular = productDocument.get(field = "isPopular"),
+                        isDiscounted = productDocument.get(field = "isDiscounted"),
+                        isNew = productDocument.get(field = "isNew"),
+                    )
+                    RequestState.Success(product)
+                } else {
+                    RequestState.Error("Selected product not found.")
+                }
+            } else {
+                RequestState.Error("User not available")
+            }
+        } catch (e: Exception) {
+            RequestState.Error("Error while reading a selected product: ${e.message}")
+        }
+    }
+
     private fun extractFirebaseStoragePath(downloadUrl: String): String? {
         val startIndex = downloadUrl.indexOf("/o/") + 3
         if (startIndex < 3) return null

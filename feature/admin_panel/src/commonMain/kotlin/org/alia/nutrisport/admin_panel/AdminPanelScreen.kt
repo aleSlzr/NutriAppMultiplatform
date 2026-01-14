@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -125,7 +124,7 @@ fun AdminPanelScreen(
                     ) { productItem ->
                         ProductCard(
                             product = productItem,
-                            onClick = { productItem.id }
+                            onClick = { navigateToManageProduct(productItem.id) }
                         )
                     }
                 }

@@ -19,4 +19,5 @@ interface AdminRepository {
         onError: (String) -> Unit,
     )
     fun readLastTenProducts(): Flow<RequestState<List<Product>>>
+    suspend fun readProductById(productId: String): RequestState<Product>
 }

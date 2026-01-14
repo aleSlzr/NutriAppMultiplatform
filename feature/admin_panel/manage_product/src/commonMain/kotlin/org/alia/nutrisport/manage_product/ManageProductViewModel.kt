@@ -3,6 +3,7 @@ package org.alia.nutrisport.manage_product
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.gitlive.firebase.storage.File
@@ -28,7 +29,10 @@ data class ManageProductState(
 
 class ManageProductViewModel(
     private val adminRepository: AdminRepository,
+    private val savedStateHandle: SavedStateHandle,
 ): ViewModel() {
+    private val productId = savedStateHandle.get<String>("id") ?: ""
+
     var screenState by mutableStateOf(ManageProductState())
         private set
 
@@ -37,6 +41,25 @@ class ManageProductViewModel(
             screenState.description.isNotEmpty() &&
             screenState.thumbnail.isNotEmpty() &&
             screenState.price != 0.0
+
+    init {
+        productId.takeIf { it.isNotEmpty() }?.let { id ->
+            viewModelScope.launch {
+                val selectedProduct = adminRepository.readProductById(productId = id)
+                if (selectedProduct.isSuccess()) {
+                    val product = selectedProduct.getSuccessData()
+                    updateTitle(product.title)
+                    updateDescription(product.description)
+                    updateThumbnail(product.thumbnail)
+                    updateThumbnailUploaderState(RequestState.Success(Unit))
+                    updateCategory(ProductCategory.valueOf(product.category))
+                    updateFlavors(product.flavors?.joinToString(",").orEmpty())
+                    updateWeight(product.weight)
+                    updatePrice(product.price)
+                }
+            }
+        }
+    }
 
     var thumbnailUploaderState: RequestState<Unit> by mutableStateOf(RequestState.Idle)
         private set
