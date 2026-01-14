@@ -47,6 +47,7 @@ import coil3.request.crossfade
 import org.alia.nutrisport.manage_product.util.PhotoPicker
 import org.alia.nutrisport.shared.BebasNeueFont
 import org.alia.nutrisport.shared.BorderIdle
+import org.alia.nutrisport.shared.ButtonPrimary
 import org.alia.nutrisport.shared.FontSize
 import org.alia.nutrisport.shared.IconPrimary
 import org.alia.nutrisport.shared.Resources
@@ -215,15 +216,49 @@ fun ManageProductScreen(
                                 }
                             },
                             onSuccess = {
-                                AsyncImage(
-                                    modifier = Modifier.fillMaxSize(),
-                                    model = ImageRequest.Builder(LocalPlatformContext.current)
-                                        .data(screenState.thumbnail)
-                                        .crossfade(enable = true)
-                                        .build(),
-                                    contentDescription = "Product thumbnail image",
-                                    contentScale = ContentScale.Crop,
-                                )
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize(),
+                                    contentAlignment = Alignment.TopEnd,
+                                ) {
+                                    AsyncImage(
+                                        modifier = Modifier.fillMaxSize(),
+                                        model = ImageRequest.Builder(LocalPlatformContext.current)
+                                            .data(screenState.thumbnail)
+                                            .crossfade(enable = true)
+                                            .build(),
+                                        contentDescription = "Product thumbnail image",
+                                        contentScale = ContentScale.Crop,
+                                    )
+                                    Box(
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(6.dp))
+                                            .padding(
+                                                top = 12.dp,
+                                                end = 12.dp,
+                                            )
+                                            .background(ButtonPrimary)
+                                            .clickable {
+                                                viewModel.deleteThumbnailFromStorage(
+                                                    onSuccess = {
+                                                        messageBarState.addSuccess("Thumbnail removed successfully.")
+                                                    },
+                                                    onError = { message ->
+                                                        messageBarState.addError(message)
+                                                    }
+                                                )
+                                            }
+                                            .padding(all = 12.dp),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        Icon(
+                                            modifier = Modifier.size(14.dp),
+                                            imageVector = Resources.Icon.Delete,
+                                            contentDescription = "Delete icon",
+                                            tint = IconPrimary,
+                                        )
+                                    }
+                                }
                             },
                         )
                     }
