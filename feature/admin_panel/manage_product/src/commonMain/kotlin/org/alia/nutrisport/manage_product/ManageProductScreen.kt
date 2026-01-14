@@ -320,10 +320,17 @@ fun ManageProductScreen(
                     icon = if (id == null) Resources.Icon.Plus else Resources.Icon.CheckMark,
                     enabled = isFormValid,
                     onClick = {
-                        viewModel.createNewProduct(
-                            onSuccess = { messageBarState.addSuccess("Product successfully added!") },
-                            onError = { message -> messageBarState.addError(message) }
-                        )
+                        if (id != null) {
+                            viewModel.updateProduct(
+                                onSuccess = { messageBarState.addSuccess("Product successfully updated!") },
+                                onError = { message -> messageBarState.addError(message) }
+                            )
+                        } else {
+                            viewModel.createNewProduct(
+                                onSuccess = { messageBarState.addSuccess("Product successfully added!") },
+                                onError = { message -> messageBarState.addError(message) }
+                            )
+                        }
                     },
                 )
             }

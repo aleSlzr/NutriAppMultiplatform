@@ -54,7 +54,7 @@ fun ProductCard(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(IntrinsicSize.Min)
+            .height(150.dp)
             .clip(RoundedCornerShape(12.dp))
             .border(
                 width = 1.dp,
@@ -82,7 +82,7 @@ fun ProductCard(
                 .crossfade(enable = true)
                 .build(),
             contentDescription = "Product thumbnail image",
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
         )
         Column(
             modifier = Modifier
