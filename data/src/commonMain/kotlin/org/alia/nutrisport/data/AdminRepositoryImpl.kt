@@ -84,6 +84,7 @@ class AdminRepositoryImpl : AdminRepository {
                 database
                     .collection(collectionPath = "product")
                     .orderBy("createdAt", Direction.DESCENDING)
+                    .limit(10)
                     .snapshots
                     .collectLatest { query ->
                         val products = query.documents.map { document ->

@@ -39,6 +39,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import org.alia.nutrisport.products_overview.ProductsOverviewScreen
 import org.alia.nutrisport.shared.Alpha
 import org.alia.nutrisport.shared.BebasNeueFont
 import org.alia.nutrisport.shared.FontSize
@@ -219,7 +220,9 @@ fun HomeGraphScreen(
                             navController = navController,
                             startDestination = Screen.ProductsOverview
                         ) {
-                            composable<Screen.ProductsOverview> {  }
+                            composable<Screen.ProductsOverview> {
+                                ProductsOverviewScreen()
+                            }
                             composable<Screen.Cart> {  }
                             composable<Screen.Categories> {  }
                         }

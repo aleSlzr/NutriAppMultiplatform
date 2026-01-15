@@ -20,7 +20,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "home"
+            baseName = "products_overview"
             isStatic = true
         }
     }
@@ -39,13 +39,10 @@ kotlin {
             // Libraries used
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
-            implementation(libs.compose.navigation)
-            implementation(libs.messagebar.kmp)
 
             // Dependency modules
             implementation(project(path = ":shared"))
             implementation(project(path = ":data"))
-            implementation(project(path = ":feature:home:products_overview"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -54,7 +51,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.alia.nutrisport.home"
+    namespace = "org.alia.nutrisport.products_overview"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
