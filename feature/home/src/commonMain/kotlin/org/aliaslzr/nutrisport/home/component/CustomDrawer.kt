@@ -1,15 +1,14 @@
 package org.aliaslzr.nutrisport.home.component
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -17,6 +16,8 @@ import org.alia.nutrisport.shared.BebasNeueFont
 import org.alia.nutrisport.shared.FontSize
 import org.alia.nutrisport.shared.TextPrimary
 import org.alia.nutrisport.shared.TextSecondary
+import org.alia.nutrisport.shared.domain.Customer
+import org.alia.nutrisport.shared.util.RequestState
 import org.aliaslzr.nutrisport.home.domain.DrawerItem
 
 @Composable
@@ -25,6 +26,7 @@ fun CustomDrawer(
     onContactUsClick: () -> Unit,
     onSignOutClick: () -> Unit,
     onAdminPanelClick: () -> Unit,
+    customer: RequestState<Customer>,
 ) {
     Column(
         modifier = Modifier
@@ -64,12 +66,16 @@ fun CustomDrawer(
             Spacer(modifier = Modifier.height(12.dp))
         }
         Spacer(modifier = Modifier.weight(1f))
-        DrawerItemCard(
-            drawerItem = DrawerItem.Admin,
-            onClick = {
-                onAdminPanelClick()
-            },
-        )
+        AnimatedContent(targetState = customer) { customerState ->
+            if (customerState.isSuccess() && customerState.getSuccessData().isAdmin) {
+                DrawerItemCard(
+                    drawerItem = DrawerItem.Admin,
+                    onClick = {
+                        onAdminPanelClick()
+                    },
+                )
+            }
+        }
         Spacer(modifier = Modifier.height(24.dp))
     }
 }
