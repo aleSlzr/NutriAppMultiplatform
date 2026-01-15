@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.alia.nutrisport.shared.FontSize
+import org.alia.nutrisport.shared.TextPrimary
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
@@ -40,11 +41,13 @@ fun InfoCard(
             text = title,
             fontSize = FontSize.MEDIUM,
             fontWeight = FontWeight.Bold,
+            color = TextPrimary,
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = subtitle,
             fontSize = FontSize.REGULAR,
+            color = TextPrimary,
         )
     }
 }

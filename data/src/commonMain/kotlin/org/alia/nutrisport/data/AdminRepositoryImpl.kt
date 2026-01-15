@@ -28,8 +28,11 @@ class AdminRepositoryImpl : AdminRepository {
             val currentUser = getCurrentUserId()
             if (currentUser != null) {
                 val firestore = Firebase.firestore
-                val productCollection = firestore.collection(collectionPath = "product")
-                productCollection.document(product.id).set(product)
+                val productCollection = firestore
+                    .collection(collectionPath = "product")
+                productCollection
+                    .document(product.id)
+                    .set(product.copy(title = product.title.lowercase()))
                 onSuccess()
             } else {
                 onError("User is not available.")
@@ -99,7 +102,13 @@ class AdminRepositoryImpl : AdminRepository {
                                 isNew = document.get(field = "isNew"),
                             )
                         }
-                        send(RequestState.Success(products))
+                        send(RequestState.Success(
+                            products
+                                .map {
+                                    it.copy(title = it.title.uppercase())
+                                }
+                            )
+                        )
                     }
             } else {
                 send(RequestState.Error("User is not available."))
@@ -133,7 +142,7 @@ class AdminRepositoryImpl : AdminRepository {
                         isDiscounted = productDocument.get(field = "isDiscounted"),
                         isNew = productDocument.get(field = "isNew"),
                     )
-                    RequestState.Success(product)
+                    RequestState.Success(product.copy(title = product.title.uppercase()))
                 } else {
                     RequestState.Error("Selected product not found.")
                 }
@@ -191,7 +200,7 @@ class AdminRepositoryImpl : AdminRepository {
                 if (existingProduct.exists) {
                     productCollection
                         .document(product.id)
-                        .update(product)
+                        .update(product.copy(title = product.title.lowercase()))
                     onSuccess()
                 } else {
                     onError("Selected Product not found.")
@@ -230,6 +239,58 @@ class AdminRepositoryImpl : AdminRepository {
             }
         } catch (e: Exception) {
             onError("Error while deleting product: ${e.message}")
+        }
+    }
+
+    override fun searchProductByTitle(searchQuery: String): Flow<RequestState<List<Product>>> = channelFlow{
+        try {
+            val userId = getCurrentUserId()
+            if (userId != null) {
+                val database = Firebase.firestore
+                //val queryText = searchQuery.trim().lowercase()
+                //val endText = queryText + "\uf8ff"
+
+                database
+                    .collection(collectionPath = "product")
+                    // Firebase not able to search something by a specific word title
+                    //.orderBy("title")
+                    //.startAt(queryText)
+                    //.endAt(endText)
+                    .snapshots
+                    .collectLatest { queryResult ->
+                        val products = queryResult.documents.map { document ->
+                            Product(
+                                id = document.id,
+                                createdAt = document.get(field = "createdAt"),
+                                title = document.get(field = "title"),
+                                description = document.get(field = "description"),
+                                thumbnail = document.get(field = "thumbnail"),
+                                category = document.get(field = "category"),
+                                flavors = document.get(field = "flavors"),
+                                weight = document.get(field = "weight"),
+                                price = document.get(field = "price"),
+                                isPopular = document.get(field = "isPopular"),
+                                isDiscounted = document.get(field = "isDiscounted"),
+                                isNew = document.get(field = "isNew"),
+                            )
+                        }
+                        send(RequestState.Success(
+                            products
+                                .filter {
+                                    it.title.contains(searchQuery)
+                                }
+                                .map {
+                                    it.copy(title = it.title.uppercase())
+                                }
+
+                            )
+                        )
+                    }
+            } else {
+                send(RequestState.Error("User is not available"))
+            }
+        } catch (e: Exception) {
+            send(RequestState.Error("Error while searching products: ${e.message}"))
         }
     }
 

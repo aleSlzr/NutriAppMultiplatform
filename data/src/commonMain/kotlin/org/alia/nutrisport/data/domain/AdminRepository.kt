@@ -36,4 +36,7 @@ interface AdminRepository {
         onSuccess: () -> Unit,
         onError: (String) -> Unit,
     )
+    fun searchProductByTitle(
+        searchQuery: String,
+    ): Flow<RequestState<List<Product>>>
 }
