@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +27,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -54,7 +57,9 @@ import org.alia.nutrisport.shared.FontSize
 import org.alia.nutrisport.shared.IconPrimary
 import org.alia.nutrisport.shared.Resources
 import org.alia.nutrisport.shared.Surface
+import org.alia.nutrisport.shared.SurfaceDarker
 import org.alia.nutrisport.shared.SurfaceLighter
+import org.alia.nutrisport.shared.SurfaceSecondary
 import org.alia.nutrisport.shared.TextPrimary
 import org.alia.nutrisport.shared.TextSecondary
 import org.alia.nutrisport.shared.component.AlertTextField
@@ -358,6 +363,84 @@ fun ManageProductScreen(
                             keyboardType = KeyboardType.Number,
                         )
                     )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(24.dp),
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                modifier = Modifier.padding(start = 12.dp),
+                                text = "New",
+                                fontSize = FontSize.REGULAR,
+                                color = TextPrimary,
+                            )
+                            Switch(
+                                checked = screenState.isNew,
+                                onCheckedChange = viewModel::updateIsNew,
+                                colors = SwitchDefaults.colors(
+                                    checkedTrackColor = SurfaceSecondary,
+                                    uncheckedTrackColor = SurfaceDarker,
+                                    checkedThumbColor = Surface,
+                                    uncheckedThumbColor = Surface,
+                                    checkedBorderColor = SurfaceSecondary,
+                                    uncheckedBorderColor = SurfaceDarker,
+                                )
+                            )
+                        }
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                modifier = Modifier.padding(start = 12.dp),
+                                text = "Popular",
+                                fontSize = FontSize.REGULAR,
+                                color = TextPrimary,
+                            )
+                            Switch(
+                                checked = screenState.isPopular,
+                                onCheckedChange = viewModel::updateIsPopular,
+                                colors = SwitchDefaults.colors(
+                                    checkedTrackColor = SurfaceSecondary,
+                                    uncheckedTrackColor = SurfaceDarker,
+                                    checkedThumbColor = Surface,
+                                    uncheckedThumbColor = Surface,
+                                    checkedBorderColor = SurfaceSecondary,
+                                    uncheckedBorderColor = SurfaceDarker,
+                                )
+                            )
+                        }
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                modifier = Modifier.padding(start = 12.dp),
+                                text = "Discounted",
+                                fontSize = FontSize.REGULAR,
+                                color = TextPrimary,
+                            )
+                            Switch(
+                                checked = screenState.isDiscounted,
+                                onCheckedChange = viewModel::updateIsDiscounted,
+                                colors = SwitchDefaults.colors(
+                                    checkedTrackColor = SurfaceSecondary,
+                                    uncheckedTrackColor = SurfaceDarker,
+                                    checkedThumbColor = Surface,
+                                    uncheckedThumbColor = Surface,
+                                    checkedBorderColor = SurfaceSecondary,
+                                    uncheckedBorderColor = SurfaceDarker,
+                                )
+                            )
+                        }
+                    }
                     Spacer(modifier = Modifier.height(24.dp))
                 }
                 PrimaryButton(
