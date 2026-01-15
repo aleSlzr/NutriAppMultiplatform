@@ -27,6 +27,14 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            androidMain.dependencies {
+                implementation(libs.androidx.activity.compose)
+
+                implementation(libs.ktor.android.client)
+            }
+            iosMain.dependencies {
+                implementation(libs.ktor.darwin.client)
+            }
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -39,6 +47,11 @@ kotlin {
             // Libraries used
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
+
+            implementation(libs.coil3)
+            implementation(libs.coil3.compose)
+            implementation(libs.coil3.compose.core)
+            implementation(libs.coil3.network.ktor)
 
             // Dependency modules
             implementation(project(path = ":shared"))

@@ -1,13 +1,11 @@
 package org.alia.nutrisport.shared.component
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -43,7 +41,6 @@ import org.alia.nutrisport.shared.TextPrimary
 import org.alia.nutrisport.shared.TextSecondary
 import org.alia.nutrisport.shared.domain.Product
 import org.alia.nutrisport.shared.domain.ProductCategory
-import org.jetbrains.compose.resources.Font
 
 @Composable
 fun ProductCard(
