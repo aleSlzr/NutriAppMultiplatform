@@ -43,11 +43,10 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import org.alia.nutrisport.shared.Alpha
 import org.alia.nutrisport.shared.FontSize
-import org.alia.nutrisport.shared.IconPrimary
+import org.alia.nutrisport.shared.IconWhite
 import org.alia.nutrisport.shared.Resources
 import org.alia.nutrisport.shared.RobotoCondensedFont
 import org.alia.nutrisport.shared.TextBrand
-import org.alia.nutrisport.shared.TextPrimary
 import org.alia.nutrisport.shared.TextWhite
 import org.alia.nutrisport.shared.domain.Product
 import org.alia.nutrisport.shared.domain.ProductCategory
@@ -56,7 +55,7 @@ import org.alia.nutrisport.shared.domain.ProductCategory
 fun MainProductCard(
     modifier: Modifier = Modifier,
     product: Product,
-    isVisible: Boolean = false,
+    isLarge: Boolean = false,
     onClick: (String) -> Unit,
 ) {
     val infiniteTransition = rememberInfiniteTransition()
@@ -78,17 +77,17 @@ fun MainProductCard(
         )
     )
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxHeight()
+            .clip(RoundedCornerShape(size = 12.dp))
             .clickable { onClick(product.id) }
     ) {
         AsyncImage(
             modifier = Modifier
                 .fillMaxSize()
-                .clip(RoundedCornerShape(size = 12.dp))
                 .animateContentSize()
                 .then(
-                    if (isVisible) Modifier
+                    if (isLarge) Modifier
                         .scale(animateScale.value)
                         .rotate(animatedRotation.value)
                     else Modifier
@@ -133,6 +132,7 @@ fun MainProductCard(
                 Text(
                     text = product.description,
                     fontSize = FontSize.REGULAR,
+                    lineHeight = FontSize.REGULAR * 1.3f,
                     color = TextWhite.copy(alpha = Alpha.HALF),
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
@@ -162,13 +162,13 @@ fun MainProductCard(
                                         modifier = Modifier.size(14.dp),
                                         imageVector = Resources.Icon.Weight,
                                         contentDescription = "Weight icon",
-                                        tint = IconPrimary,
+                                        tint = IconWhite,
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     Text(
                                         text = "${product.weight}g",
                                         fontSize = FontSize.MEDIUM,
-                                        color = TextPrimary,
+                                        color = TextWhite,
                                     )
                                 }
                             }
