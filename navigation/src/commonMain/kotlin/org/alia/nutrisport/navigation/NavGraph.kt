@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import org.alia.nutrisport.admin_panel.AdminPanelScreen
 import org.alia.nutrisport.auth.AuthScreen
+import org.alia.nutrisport.details.DetailScreen
 import org.alia.nutrisport.manage_product.ManageProductScreen
 import org.alia.nutrisport.profile.ProfileScreen
 import org.alia.nutrisport.shared.navigation.Screen
@@ -41,6 +42,9 @@ fun NavGraph(startDestination: Screen = Screen.Auth) {
                 navigateToAdminPanel = {
                     navController.navigate(Screen.AdminPanel)
                 },
+                navigateToDetails = { productId ->
+                    navController.navigate(Screen.DetailScreen(id = productId))
+                }
             )
         }
         composable<Screen.Profile> {
@@ -64,6 +68,13 @@ fun NavGraph(startDestination: Screen = Screen.Auth) {
             val id = it.toRoute<Screen.ManageProduct>().id
             ManageProductScreen(
                 id = id,
+                navigateBack = {
+                    navController.navigateUp()
+                },
+            )
+        }
+        composable<Screen.DetailScreen> {
+            DetailScreen(
                 navigateBack = {
                     navController.navigateUp()
                 },

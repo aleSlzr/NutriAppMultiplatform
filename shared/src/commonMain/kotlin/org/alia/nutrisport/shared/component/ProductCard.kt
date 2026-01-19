@@ -133,7 +133,7 @@ fun ProductCard(
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 text = "${product.weight}g",
-                                fontSize = FontSize.MEDIUM,
+                                fontSize = FontSize.REGULAR,
                                 color = TextPrimary,
                             )
                         }
@@ -141,7 +141,7 @@ fun ProductCard(
                 }
                 Text(
                     text = "$${product.price}",
-                    fontSize = FontSize.EXTRA_REGULAR,
+                    fontSize = FontSize.MEDIUM,
                     color = TextSecondary,
                     fontWeight = FontWeight.Medium
                 )

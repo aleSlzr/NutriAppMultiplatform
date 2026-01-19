@@ -8,6 +8,7 @@ import org.alia.nutrisport.data.ProductRepositoryImpl
 import org.alia.nutrisport.data.domain.AdminRepository
 import org.alia.nutrisport.data.domain.CustomerRepository
 import org.alia.nutrisport.data.domain.ProductRepository
+import org.alia.nutrisport.details.DetailsViewModel
 import org.alia.nutrisport.manage_product.ManageProductViewModel
 import org.alia.nutrisport.products_overview.ProductsOverviewViewModel
 import org.alia.nutrisport.profile.ProfileViewModel
@@ -28,6 +29,7 @@ val sharedModule = module {
     viewModelOf(::ManageProductViewModel)
     viewModelOf(::AdminPanelViewModel)
     viewModelOf(::ProductsOverviewViewModel)
+    viewModelOf(::DetailsViewModel)
 }
 
 expect val targetModule: Module

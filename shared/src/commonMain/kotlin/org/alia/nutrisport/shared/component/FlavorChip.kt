@@ -1,0 +1,46 @@
+package org.alia.nutrisport.shared.component
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import org.alia.nutrisport.shared.BorderIdle
+import org.alia.nutrisport.shared.BorderSecondary
+import org.alia.nutrisport.shared.FontSize
+import org.alia.nutrisport.shared.Surface
+import org.alia.nutrisport.shared.TextPrimary
+import org.alia.nutrisport.shared.TextSecondary
+
+@Composable
+fun FlavorChip(
+    flavor: String,
+    isSelected: Boolean = false,
+) {
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(size = 12.dp))
+            .background(Surface)
+            .border(
+                width = 1.dp,
+                color = if (isSelected) BorderSecondary else BorderIdle,
+                shape = RoundedCornerShape(12.dp)
+            )
+            .padding(all = 16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = flavor,
+            fontSize = FontSize.SMALL,
+            color = if (isSelected) TextSecondary else TextPrimary,
+            fontWeight = FontWeight.Medium,
+        )
+    }
+}
