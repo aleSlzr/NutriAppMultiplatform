@@ -53,7 +53,9 @@ import org.alia.nutrisport.shared.component.FlavorChip
 import org.alia.nutrisport.shared.component.InfoCard
 import org.alia.nutrisport.shared.component.LoadingCard
 import org.alia.nutrisport.shared.component.PrimaryButton
+import org.alia.nutrisport.shared.component.QuantityCounter
 import org.alia.nutrisport.shared.domain.ProductCategory
+import org.alia.nutrisport.shared.domain.QuantityCounterSize
 import org.alia.nutrisport.shared.util.DisplayResult
 import org.koin.compose.viewmodel.koinViewModel
 import rememberMessageBarState
@@ -66,6 +68,7 @@ fun DetailScreen(
     val messageBarState = rememberMessageBarState()
     val viewModel = koinViewModel<DetailsViewModel>()
     val product by viewModel.product.collectAsState()
+    val quantity = viewModel.quantity
 
     Scaffold(
         contentColor = Surface,
@@ -94,6 +97,23 @@ fun DetailScreen(
                             tint = IconPrimary,
                         )
                     }
+                },
+                actions = {
+                    QuantityCounter(
+                        size = QuantityCounterSize.Large,
+                        value = "$quantity",
+                        onMinusClick = {
+                            if (quantity > 1) {
+                                viewModel.updateQuantity(quantity - 1)
+                            }
+                        },
+                        onPlusClick = {
+                            if (quantity < 10) {
+                                viewModel.updateQuantity(quantity + 1)
+                            }
+                        },
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
                 }
             )
         }
