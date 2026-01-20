@@ -49,7 +49,9 @@ import org.alia.nutrisport.shared.Resources
 import org.alia.nutrisport.shared.Surface
 import org.alia.nutrisport.shared.SurfaceLighter
 import org.alia.nutrisport.shared.TextPrimary
+import org.alia.nutrisport.shared.domain.Customer
 import org.alia.nutrisport.shared.navigation.Screen
+import org.alia.nutrisport.shared.util.RequestState
 import org.alia.nutrisport.shared.util.getScreenWidth
 import org.aliaslzr.nutrisport.home.component.BottomBar
 import org.aliaslzr.nutrisport.home.component.CustomDrawer
@@ -237,6 +239,7 @@ fun HomeGraphScreen(
                             .padding(all = 12.dp)
                         ) {
                             BottomBar(
+                                customer = customer,
                                 selected = selectedDestination,
                                 onSelect = { destination ->
                                     navController.navigate(destination.screen) {
