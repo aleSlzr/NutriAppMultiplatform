@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import org.alia.nutrisport.data.domain.CustomerRepository
+import org.alia.nutrisport.shared.domain.CartItem
 import org.alia.nutrisport.shared.domain.Customer
 import org.alia.nutrisport.shared.util.RequestState
 
@@ -117,6 +118,39 @@ class CustomerRepositoryImpl: CustomerRepository {
             }
         } catch (e: Exception) {
             onError("Error while updating a Customer information: ${e.message}")
+        }
+    }
+
+    override suspend fun addItemToCart(
+        cartItem: CartItem,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        try {
+            val currentUserId = getCurrentUserId()
+            if (currentUserId != null) {
+                val database = Firebase.firestore
+                val customerCollection = database.collection(collectionPath = "customer")
+                val existingCustomer = customerCollection
+                    .document(currentUserId)
+                    .get()
+                if (existingCustomer.exists) {
+                    val existingCart = existingCustomer.get<List<CartItem>>("cart")
+                    val updatedCart = existingCart + cartItem
+                    customerCollection.document(currentUserId)
+                        .set(
+                            data = mapOf("cart" to updatedCart),
+                            merge = true,
+                        )
+                    onSuccess()
+                } else {
+                    onError("Selected customer does not exist.")
+                }
+            } else {
+                onError("User is not available.")
+            }
+        } catch (e: Exception) {
+            onError("Error while adding a product to cart: ${e.message}")
         }
     }
 

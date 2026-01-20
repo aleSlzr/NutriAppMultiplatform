@@ -2,6 +2,7 @@ package org.alia.nutrisport.data.domain
 
 import dev.gitlive.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
+import org.alia.nutrisport.shared.domain.CartItem
 import org.alia.nutrisport.shared.domain.Customer
 import org.alia.nutrisport.shared.util.RequestState
 
@@ -15,6 +16,11 @@ interface CustomerRepository {
     fun readCustomerFlow(): Flow<RequestState<Customer>>
     suspend fun updateCustomer(
         customer: Customer,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit,
+    )
+    suspend fun addItemToCart(
+        cartItem: CartItem,
         onSuccess: () -> Unit,
         onError: (String) -> Unit,
     )

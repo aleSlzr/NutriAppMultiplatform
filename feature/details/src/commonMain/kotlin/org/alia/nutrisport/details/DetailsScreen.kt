@@ -69,6 +69,7 @@ fun DetailScreen(
     val viewModel = koinViewModel<DetailsViewModel>()
     val product by viewModel.product.collectAsState()
     val quantity = viewModel.quantity
+    val selectedFlavor = viewModel.selectedFlavor
 
     Scaffold(
         contentColor = Surface,
@@ -239,7 +240,10 @@ fun DetailScreen(
                                     selectedProduct.flavors?.forEach { flavor ->
                                         FlavorChip(
                                             flavor = flavor,
-                                            isSelected = true,
+                                            isSelected = selectedFlavor == flavor,
+                                            onClick = {
+                                                viewModel.updateFlavor(flavor)
+                                            }
                                         )
                                         Spacer(modifier = Modifier.width(8.dp))
                                     }
@@ -249,7 +253,14 @@ fun DetailScreen(
                             PrimaryButton(
                                 icon = Resources.Icon.ShoppingCart,
                                 text = "Add to cart",
-                                onClick = {}
+                                onClick = {
+                                    viewModel.addItemToCart(
+                                        onSuccess = { messageBarState.addSuccess("Product added to cart.") },
+                                        onError = { message -> messageBarState.addError(message) }
+                                    )
+                                },
+                                enabled = if (selectedProduct.flavors?.isNotEmpty() == true) selectedFlavor != null
+                                else true,
                             )
                         }
                     }
