@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.alia.nutrisport.data.domain.CustomerRepository
 import org.alia.nutrisport.data.domain.ProductRepository
 import org.alia.nutrisport.shared.util.RequestState
@@ -45,6 +46,22 @@ class CartViewModel(
             customerState.isError() -> RequestState.Error(customerState.getErrorMessage())
             productListState.isError() -> RequestState.Error(productListState.getErrorMessage())
             else -> RequestState.Loading
+        }
+    }
+
+    fun updateCartItemQuantity(
+        id: String,
+        quantity: Int,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit,
+    ) {
+        viewModelScope.launch {
+            customerRepository.updateCartItemQuantity(
+                id = id,
+                quantity = quantity,
+                onSuccess = onSuccess,
+                onError = onError,
+            )
         }
     }
 }

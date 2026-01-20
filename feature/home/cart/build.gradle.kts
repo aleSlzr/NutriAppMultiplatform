@@ -49,6 +49,8 @@ kotlin {
             implementation(libs.coil3.compose.core)
             implementation(libs.coil3.network.ktor)
 
+            implementation(libs.messagebar.kmp)
+
             // Dependency modules
             implementation(project(path = ":shared"))
             implementation(project(path = ":data"))
