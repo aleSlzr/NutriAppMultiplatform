@@ -64,4 +64,18 @@ class CartViewModel(
             )
         }
     }
+
+    fun deleteCartItem(
+        id: String,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit,
+    ) {
+        viewModelScope.launch {
+            customerRepository.deleteCartItem(
+                id = id,
+                onSuccess = onSuccess,
+                onError = onError,
+            )
+        }
+    }
 }
