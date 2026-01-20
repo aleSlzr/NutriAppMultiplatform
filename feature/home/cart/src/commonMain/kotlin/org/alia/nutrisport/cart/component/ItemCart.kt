@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -55,6 +56,7 @@ fun ItemCart(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .height(120.dp)
             .clip(RoundedCornerShape(size = 12.dp))
             .background(SurfaceLighter)
     ) {
@@ -79,7 +81,7 @@ fun ItemCart(
         )
         Column(
             modifier = Modifier
-            .weight(1f)
+                .fillMaxSize()
                 .padding(all = 12.dp),
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -88,6 +90,7 @@ fun ItemCart(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
+                    modifier = Modifier.weight(1f),
                     text = product.title,
                     fontFamily = RobotoCondensedFont(),
                     fontSize = FontSize.MEDIUM,
@@ -104,14 +107,14 @@ fun ItemCart(
                         .border(
                             width = 1.dp,
                             color = BorderIdle,
-                            shape = RoundedCornerShape(size = 6.dp),
+                            shape = RoundedCornerShape(size = 12.dp),
                         )
                         .clickable { onDeleteClick() }
                         .padding(all = 8.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(16.dp),
                         imageVector = Resources.Icon.Delete,
                         contentDescription = "Delete icon",
                         tint = IconPrimary,
@@ -123,7 +126,7 @@ fun ItemCart(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = "${product.price}",
+                    text = "$${product.price}",
                     fontFamily = RobotoCondensedFont(),
                     fontSize = FontSize.EXTRA_REGULAR,
                     color = TextSecondary,

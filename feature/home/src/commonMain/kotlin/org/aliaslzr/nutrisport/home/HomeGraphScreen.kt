@@ -39,6 +39,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import org.alia.nutrisport.cart.CartScreen
 import org.alia.nutrisport.products_overview.ProductsOverviewScreen
 import org.alia.nutrisport.shared.Alpha
 import org.alia.nutrisport.shared.BebasNeueFont
@@ -226,7 +227,9 @@ fun HomeGraphScreen(
                                     navigateToDetails = navigateToDetails
                                 )
                             }
-                            composable<Screen.Cart> {  }
+                            composable<Screen.Cart> {
+                                CartScreen()
+                            }
                             composable<Screen.Categories> {  }
                         }
                         Spacer(modifier = Modifier.height(12.dp))
