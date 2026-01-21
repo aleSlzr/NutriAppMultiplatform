@@ -40,6 +40,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.alia.nutrisport.cart.CartScreen
+import org.alia.nutrisport.categories.CategoriesScreen
 import org.alia.nutrisport.products_overview.ProductsOverviewScreen
 import org.alia.nutrisport.shared.Alpha
 import org.alia.nutrisport.shared.BebasNeueFont
@@ -49,9 +50,7 @@ import org.alia.nutrisport.shared.Resources
 import org.alia.nutrisport.shared.Surface
 import org.alia.nutrisport.shared.SurfaceLighter
 import org.alia.nutrisport.shared.TextPrimary
-import org.alia.nutrisport.shared.domain.Customer
 import org.alia.nutrisport.shared.navigation.Screen
-import org.alia.nutrisport.shared.util.RequestState
 import org.alia.nutrisport.shared.util.getScreenWidth
 import org.aliaslzr.nutrisport.home.component.BottomBar
 import org.aliaslzr.nutrisport.home.component.CustomDrawer
@@ -69,6 +68,7 @@ fun HomeGraphScreen(
     navigateToProfile: () -> Unit,
     navigateToAdminPanel: () -> Unit,
     navigateToDetails: (String) -> Unit,
+    navigateToCategorySearch: (String) -> Unit,
 ) {
     val navController = rememberNavController()
     val currentRoute = navController.currentBackStackEntryAsState()
@@ -232,7 +232,11 @@ fun HomeGraphScreen(
                             composable<Screen.Cart> {
                                 CartScreen()
                             }
-                            composable<Screen.Categories> {  }
+                            composable<Screen.Categories> {
+                                CategoriesScreen(
+                                    navigateToCategorySearch = navigateToCategorySearch,
+                                )
+                            }
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         Box(modifier = Modifier

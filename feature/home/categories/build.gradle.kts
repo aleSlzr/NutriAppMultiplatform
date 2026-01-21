@@ -20,7 +20,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "di"
+            baseName = "categories"
             isStatic = true
         }
     }
@@ -37,20 +37,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             // Libraries used
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
 
             // Dependency modules
-            implementation(project(path = ":feature:auth"))
-            implementation(project(path = ":feature:home"))
-            implementation(project(path = ":feature:profile"))
-            implementation(project(path = ":feature:details"))
-            implementation(project(path = ":feature:admin_panel"))
-            implementation(project(path = ":feature:admin_panel:manage_product"))
-            implementation(project(path = ":feature:home:cart"))
-            implementation(project(path = ":feature:home:products_overview"))
-            implementation(project(path = ":feature:home:categories:category_search"))
+            implementation(project(path = ":shared"))
             implementation(project(path = ":data"))
         }
         commonTest.dependencies {
@@ -60,7 +49,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.alia.nutrisport.di"
+    namespace = "org.alia.nutrisport.categories"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import org.alia.nutrisport.data.domain.ProductRepository
 import org.alia.nutrisport.shared.domain.Product
+import org.alia.nutrisport.shared.domain.ProductCategory
 import org.alia.nutrisport.shared.util.RequestState
+import kotlin.collections.chunked
 
 class ProductRepositoryImpl : ProductRepository {
     override fun getCurrentUserId() = Firebase.auth.currentUser?.uid
@@ -172,6 +174,42 @@ class ProductRepositoryImpl : ProductRepository {
                             }
                         }
                 }
+            } else {
+                send(RequestState.Error("User is not available."))
+            }
+        } catch (e: Exception) {
+            send(RequestState.Error("Error while reading a selected product ${e.message}"))
+        }
+    }
+
+    override fun readProductByCategoryList(category: ProductCategory): Flow<RequestState<List<Product>>> = channelFlow {
+        try {
+            val userId = getCurrentUserId()
+            if (userId != null) {
+                val database = Firebase.firestore
+                database
+                    .collection(collectionPath = "product")
+                    .where { "category" equalTo category.name }
+                    .snapshots
+                    .collectLatest { query ->
+                        val productList = query.documents.map { document ->
+                            Product(
+                                id = document.id,
+                                createdAt = document.get(field = "createdAt"),
+                                title = document.get(field = "title"),
+                                description = document.get(field = "description"),
+                                thumbnail = document.get(field = "thumbnail"),
+                                category = document.get(field = "category"),
+                                flavors = document.get(field = "flavors"),
+                                weight = document.get(field = "weight"),
+                                price = document.get(field = "price"),
+                                isPopular = document.get(field = "isPopular"),
+                                isDiscounted = document.get(field = "isDiscounted"),
+                                isNew = document.get(field = "isNew"),
+                            )
+                        }
+                        send(RequestState.Success(productList.map { it.copy(title = it.title.uppercase()) }))
+                    }
             } else {
                 send(RequestState.Error("User is not available."))
             }

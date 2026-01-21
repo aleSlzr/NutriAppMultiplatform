@@ -7,9 +7,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import org.alia.nutrisport.admin_panel.AdminPanelScreen
 import org.alia.nutrisport.auth.AuthScreen
+import org.alia.nutrisport.category_search.CategorySearchScreen
 import org.alia.nutrisport.details.DetailScreen
 import org.alia.nutrisport.manage_product.ManageProductScreen
 import org.alia.nutrisport.profile.ProfileScreen
+import org.alia.nutrisport.shared.domain.ProductCategory
 import org.alia.nutrisport.shared.navigation.Screen
 import org.aliaslzr.nutrisport.home.HomeGraphScreen
 
@@ -44,6 +46,9 @@ fun NavGraph(startDestination: Screen = Screen.Auth) {
                 },
                 navigateToDetails = { productId ->
                     navController.navigate(Screen.DetailScreen(id = productId))
+                },
+                navigateToCategorySearch = { categoryName ->
+                    navController.navigate(Screen.CategorySearch(category = categoryName))
                 }
             )
         }
@@ -78,6 +83,18 @@ fun NavGraph(startDestination: Screen = Screen.Auth) {
                 navigateBack = {
                     navController.navigateUp()
                 },
+            )
+        }
+        composable<Screen.CategorySearch> {
+            val category = ProductCategory.valueOf(it.toRoute<Screen.CategorySearch>().category)
+            CategorySearchScreen(
+                category = category,
+                navigateBack = {
+                    navController.navigateUp()
+                },
+                navigateToDetails = { productId ->
+                    navController.navigate(Screen.DetailScreen(id = productId))
+                }
             )
         }
     }
