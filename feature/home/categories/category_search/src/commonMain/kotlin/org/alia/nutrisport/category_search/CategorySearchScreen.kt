@@ -1,6 +1,9 @@
 package org.alia.nutrisport.category_search
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +24,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.alia.nutrisport.shared.BebasNeueFont
@@ -45,16 +50,18 @@ fun CategorySearchScreen(
     navigateToDetails: (String) -> Unit,
 ) {
     val viewModel = koinViewModel<CategorySearchViewModel>()
-    val productList by viewModel.products.collectAsState()
+    val filteredProducts by viewModel.filteredProducts.collectAsState()
+    val searchQuery by viewModel.searchQuery.collectAsState()
+    var searchBarVisible by mutableStateOf(false)
 
     Scaffold(
         containerColor = Surface,
         topBar = {
             AnimatedContent(
-                targetState = false
+                targetState = searchBarVisible
             ) { visible ->
                 if (visible) {
-                    /*SearchBar(
+                    SearchBar(
                         modifier = Modifier
                             .padding(horizontal = 12.dp)
                             .fillMaxWidth(),
@@ -100,7 +107,7 @@ fun CategorySearchScreen(
                         expanded = false,
                         onExpandedChange = {},
                         content = {}
-                    )*/
+                    )
                 } else {
                     TopAppBar(
                         title = {
@@ -121,7 +128,7 @@ fun CategorySearchScreen(
                         actions = {
                             IconButton(
                                 onClick = {
-                                    // searchBarVisible = true
+                                    searchBarVisible = true
                                 }
                             ) {
                                 Icon(
@@ -145,7 +152,7 @@ fun CategorySearchScreen(
             }
         },
     ) { paddingValues ->
-        productList.DisplayResult(
+        filteredProducts.DisplayResult(
             modifier = Modifier
                 .padding(
                     top = paddingValues.calculateTopPadding(),
@@ -193,6 +200,7 @@ fun CategorySearchScreen(
                     }
                 }
             },
+            transitionSpec = fadeIn() togetherWith fadeOut()
         )
     }
 }
