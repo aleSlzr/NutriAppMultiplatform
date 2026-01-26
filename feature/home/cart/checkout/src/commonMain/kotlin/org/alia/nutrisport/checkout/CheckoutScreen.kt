@@ -35,6 +35,7 @@ fun CheckoutScreen(
     modifier: Modifier = Modifier,
     totalAmount: Double,
     navigateBack: () -> Unit,
+    navigateToPaymentCompleted: (Boolean?, String?) -> Unit,
 ) {
     val messageBarState = rememberMessageBarState()
     val viewModel = koinViewModel<CheckoutViewModel>()
@@ -124,9 +125,13 @@ fun CheckoutScreen(
                     enabled = isFormValid,
                     secondary = true,
                     onClick = {
-                        viewModel.updateCustomer(
-                            onSuccess = {},
-                            onError = { message -> messageBarState.addError(message) }
+                        viewModel.payOnDelivery(
+                            onSuccess = {
+                                navigateToPaymentCompleted(true, null)
+                            },
+                            onError = { message ->
+                                navigateToPaymentCompleted(null, message)
+                            }
                         )
                     },
                 )

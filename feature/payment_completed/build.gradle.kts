@@ -20,7 +20,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "cart"
+            baseName = "payment_completed"
             isStatic = true
         }
     }
@@ -44,11 +44,6 @@ kotlin {
 
             implementation(libs.messagebar.kmp)
 
-            implementation(libs.coil3)
-            implementation(libs.coil3.compose)
-            implementation(libs.coil3.compose.core)
-            implementation(libs.coil3.network.ktor)
-
             // Dependency modules
             implementation(project(path = ":shared"))
             implementation(project(path = ":data"))
@@ -61,7 +56,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.alia.nutrisport.cart"
+    namespace = "org.alia.nutrisport.payment_completed"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

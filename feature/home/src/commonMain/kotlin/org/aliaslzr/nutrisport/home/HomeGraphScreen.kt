@@ -179,20 +179,22 @@ fun HomeGraphScreen(
                             AnimatedVisibility(
                                 visible = selectedDestination == BottomBarDestination.Cart
                             ) {
-                                IconButton(
-                                    onClick = {
-                                        if (totalAmount.isSuccess()) {
-                                            navigateToCheckout(totalAmount.getSuccessData().toString())
-                                        } else if (totalAmount.isError()) {
-                                            messageBarState.addError("Error while calculating a total amount: ${totalAmount.getErrorMessage()}")
+                                if (customer.isSuccess() && customer.getSuccessData().cart.isNotEmpty()) {
+                                    IconButton(
+                                        onClick = {
+                                            if (totalAmount.isSuccess()) {
+                                                navigateToCheckout(totalAmount.getSuccessData().toString())
+                                            } else if (totalAmount.isError()) {
+                                                messageBarState.addError("Error while calculating a total amount: ${totalAmount.getErrorMessage()}")
+                                            }
                                         }
+                                    ) {
+                                        Icon(
+                                            imageVector = Resources.Icon.RightArrow,
+                                            contentDescription = "Right icon",
+                                            tint = IconPrimary,
+                                        )
                                     }
-                                ) {
-                                    Icon(
-                                        imageVector = Resources.Icon.RightArrow,
-                                        contentDescription = "Right icon",
-                                        tint = IconPrimary,
-                                    )
                                 }
                             }
                         },

@@ -7,9 +7,11 @@ import org.alia.nutrisport.category_search.CategorySearchViewModel
 import org.alia.nutrisport.checkout.CheckoutViewModel
 import org.alia.nutrisport.data.AdminRepositoryImpl
 import org.alia.nutrisport.data.CustomerRepositoryImpl
+import org.alia.nutrisport.data.OrderRepositoryImpl
 import org.alia.nutrisport.data.ProductRepositoryImpl
 import org.alia.nutrisport.data.domain.AdminRepository
 import org.alia.nutrisport.data.domain.CustomerRepository
+import org.alia.nutrisport.data.domain.OrderRepository
 import org.alia.nutrisport.data.domain.ProductRepository
 import org.alia.nutrisport.details.DetailsViewModel
 import org.alia.nutrisport.manage_product.ManageProductViewModel
@@ -26,6 +28,7 @@ val sharedModule = module {
     single<CustomerRepository> { CustomerRepositoryImpl() }
     single<AdminRepository> { AdminRepositoryImpl() }
     single<ProductRepository> { ProductRepositoryImpl() }
+    single<OrderRepository> { OrderRepositoryImpl(get()) }
     viewModelOf(::AuthViewModel)
     viewModelOf(::HomeGraphViewModel)
     viewModelOf(::ProfileViewModel)

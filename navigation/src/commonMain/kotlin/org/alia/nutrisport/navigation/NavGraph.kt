@@ -11,6 +11,7 @@ import org.alia.nutrisport.category_search.CategorySearchScreen
 import org.alia.nutrisport.checkout.CheckoutScreen
 import org.alia.nutrisport.details.DetailScreen
 import org.alia.nutrisport.manage_product.ManageProductScreen
+import org.alia.nutrisport.payment_completed.PaymentCompletedScreen
 import org.alia.nutrisport.profile.ProfileScreen
 import org.alia.nutrisport.shared.domain.ProductCategory
 import org.alia.nutrisport.shared.navigation.Screen
@@ -107,7 +108,25 @@ fun NavGraph(startDestination: Screen = Screen.Auth) {
                 totalAmount = totalAmount.toDoubleOrNull() ?: 0.0,
                 navigateBack = {
                     navController.navigateUp()
+                },
+                navigateToPaymentCompleted = { isSuccess, error ->
+                    navController.navigate(Screen.PaymentCompleted(isSuccess, error))
                 }
+            )
+        }
+        composable<Screen.PaymentCompleted> {
+            val isSuccess = it.toRoute<Screen.PaymentCompleted>().isSuccess
+            val error = it.toRoute<Screen.PaymentCompleted>().error
+            PaymentCompletedScreen(
+                navigateBack = {
+                    navController.navigate(Screen.HomeGraph) {
+                        launchSingleTop = true
+                        // Clear backstack completely
+                        popUpTo(0) { inclusive = true }
+                    }
+                },
+                isSuccess = isSuccess,
+                error = error,
             )
         }
     }
