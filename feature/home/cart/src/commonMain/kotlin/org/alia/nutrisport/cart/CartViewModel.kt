@@ -2,11 +2,10 @@ package org.alia.nutrisport.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.alia.nutrisport.data.domain.CustomerRepository
 import org.alia.nutrisport.data.domain.ProductRepository
@@ -18,6 +17,7 @@ class CartViewModel(
 ): ViewModel() {
     private val customer = customerRepository.readCustomerFlow()
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val products = customer
         .flatMapLatest { customerState ->
             if (customerState.isSuccess()) {

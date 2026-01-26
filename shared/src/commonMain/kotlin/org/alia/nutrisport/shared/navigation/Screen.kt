@@ -30,4 +30,8 @@ sealed class Screen {
     data class DetailScreen(
         val id: String,
     ): Screen()
+    @Serializable
+    data class Checkout(
+        val totalAmount: String,
+    ): Screen()
 }

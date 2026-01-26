@@ -2,6 +2,7 @@ package org.aliaslzr.nutrisport.home
 
 import ContentWithMessageBar
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -51,6 +52,7 @@ import org.alia.nutrisport.shared.Surface
 import org.alia.nutrisport.shared.SurfaceLighter
 import org.alia.nutrisport.shared.TextPrimary
 import org.alia.nutrisport.shared.navigation.Screen
+import org.alia.nutrisport.shared.util.RequestState
 import org.alia.nutrisport.shared.util.getScreenWidth
 import org.aliaslzr.nutrisport.home.component.BottomBar
 import org.aliaslzr.nutrisport.home.component.CustomDrawer
@@ -69,6 +71,7 @@ fun HomeGraphScreen(
     navigateToAdminPanel: () -> Unit,
     navigateToDetails: (String) -> Unit,
     navigateToCategorySearch: (String) -> Unit,
+    navigateToCheckout: (String) -> Unit,
 ) {
     val navController = rememberNavController()
     val currentRoute = navController.currentBackStackEntryAsState()
@@ -121,6 +124,7 @@ fun HomeGraphScreen(
 
     val viewModel = koinViewModel<HomeGraphViewModel>()
     val customer by viewModel.customer.collectAsState()
+    val totalAmount by viewModel.totalAmountFlow.collectAsState(RequestState.Loading)
     val messageBarState = rememberMessageBarState()
     Box(
         modifier = Modifier
@@ -169,6 +173,27 @@ fun HomeGraphScreen(
                                     fontSize = FontSize.LARGE,
                                     color = TextPrimary,
                                 )
+                            }
+                        },
+                        actions = {
+                            AnimatedVisibility(
+                                visible = selectedDestination == BottomBarDestination.Cart
+                            ) {
+                                IconButton(
+                                    onClick = {
+                                        if (totalAmount.isSuccess()) {
+                                            navigateToCheckout(totalAmount.getSuccessData().toString())
+                                        } else if (totalAmount.isError()) {
+                                            messageBarState.addError("Error while calculating a total amount: ${totalAmount.getErrorMessage()}")
+                                        }
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = Resources.Icon.RightArrow,
+                                        contentDescription = "Right icon",
+                                        tint = IconPrimary,
+                                    )
+                                }
                             }
                         },
                         navigationIcon = {

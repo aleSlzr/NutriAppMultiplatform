@@ -24,8 +24,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import rememberMessageBarState
 
 @Composable
-fun CartScreen(
-) {
+fun CartScreen() {
     val viewModel = koinViewModel<CartViewModel>()
     val cartItemsWithProducts by viewModel.cartItemsWithProducts.collectAsState(RequestState.Loading)
     val messageBarState = rememberMessageBarState()
