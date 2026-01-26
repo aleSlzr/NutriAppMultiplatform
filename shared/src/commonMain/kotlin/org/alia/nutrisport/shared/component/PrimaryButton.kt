@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import org.alia.nutrisport.shared.Alpha
 import org.alia.nutrisport.shared.ButtonDisabled
 import org.alia.nutrisport.shared.ButtonPrimary
+import org.alia.nutrisport.shared.ButtonSecondary
 import org.alia.nutrisport.shared.FontSize
 import org.alia.nutrisport.shared.RobotoCondensedFont
 import org.alia.nutrisport.shared.TextPrimary
@@ -28,6 +29,7 @@ fun PrimaryButton(
     text: String,
     icon: ImageVector? = null,
     enabled: Boolean = true,
+    secondary: Boolean = false,
     onClick: () -> Unit,
 ) {
     Button(
@@ -36,7 +38,7 @@ fun PrimaryButton(
         enabled = enabled,
         shape = RoundedCornerShape(6.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = ButtonPrimary,
+            containerColor = if (secondary) ButtonSecondary else ButtonPrimary,
             contentColor = TextPrimary,
             disabledContainerColor = ButtonDisabled,
             disabledContentColor = TextPrimary.copy(alpha = Alpha.DISABLED),

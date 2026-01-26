@@ -8,6 +8,7 @@ import androidx.navigation.toRoute
 import org.alia.nutrisport.admin_panel.AdminPanelScreen
 import org.alia.nutrisport.auth.AuthScreen
 import org.alia.nutrisport.category_search.CategorySearchScreen
+import org.alia.nutrisport.checkout.CheckoutScreen
 import org.alia.nutrisport.details.DetailScreen
 import org.alia.nutrisport.manage_product.ManageProductScreen
 import org.alia.nutrisport.profile.ProfileScreen
@@ -101,7 +102,13 @@ fun NavGraph(startDestination: Screen = Screen.Auth) {
             )
         }
         composable<Screen.Checkout> {
-
+            val totalAmount = it.toRoute<Screen.Checkout>().totalAmount
+            CheckoutScreen(
+                totalAmount = totalAmount.toDoubleOrNull() ?: 0.0,
+                navigateBack = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

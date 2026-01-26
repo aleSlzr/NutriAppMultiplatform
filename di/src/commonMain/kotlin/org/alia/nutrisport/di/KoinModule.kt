@@ -4,6 +4,7 @@ import org.alia.nutrisport.admin_panel.AdminPanelViewModel
 import org.alia.nutrisport.auth.AuthViewModel
 import org.alia.nutrisport.cart.CartViewModel
 import org.alia.nutrisport.category_search.CategorySearchViewModel
+import org.alia.nutrisport.checkout.CheckoutViewModel
 import org.alia.nutrisport.data.AdminRepositoryImpl
 import org.alia.nutrisport.data.CustomerRepositoryImpl
 import org.alia.nutrisport.data.ProductRepositoryImpl
@@ -34,6 +35,7 @@ val sharedModule = module {
     viewModelOf(::DetailsViewModel)
     viewModelOf(::CartViewModel)
     viewModelOf(::CategorySearchViewModel)
+    viewModelOf(::CheckoutViewModel)
 }
 
 expect val targetModule: Module
