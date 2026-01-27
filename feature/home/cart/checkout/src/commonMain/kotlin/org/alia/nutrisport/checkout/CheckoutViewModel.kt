@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.alia.nutrisport.checkout.domain.PayPalAPI
 import org.alia.nutrisport.data.domain.CustomerRepository
 import org.alia.nutrisport.data.domain.OrderRepository
 import org.alia.nutrisport.shared.domain.CartItem
@@ -34,6 +35,7 @@ class CheckoutViewModel(
     private val customerRepository: CustomerRepository,
     private val orderRepository: OrderRepository,
     private val savedStateHandle: SavedStateHandle,
+    private val payPalAPI: PayPalAPI,
 ) : ViewModel() {
     var screenReady: RequestState<Unit> by mutableStateOf(RequestState.Loading)
     var screenState: CheckoutScreenState by mutableStateOf(CheckoutScreenState())
@@ -50,6 +52,16 @@ class CheckoutViewModel(
         }
 
     init {
+        viewModelScope.launch {
+            payPalAPI.fetchAccessToken(
+                onSuccess = { token ->
+
+                },
+                onError = { message ->
+
+                }
+            )
+        }
         viewModelScope.launch {
             customerRepository.readCustomerFlow().collectLatest { data ->
                 if (data.isSuccess()) {
