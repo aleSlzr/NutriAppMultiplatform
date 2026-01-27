@@ -1,6 +1,9 @@
 package org.alia.nutrisport.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -15,11 +18,24 @@ import org.alia.nutrisport.payment_completed.PaymentCompletedScreen
 import org.alia.nutrisport.profile.ProfileScreen
 import org.alia.nutrisport.shared.domain.ProductCategory
 import org.alia.nutrisport.shared.navigation.Screen
+import org.alia.nutrisport.shared.util.IntentHandler
 import org.aliaslzr.nutrisport.home.HomeGraphScreen
+import org.koin.compose.koinInject
 
 @Composable
 fun NavGraph(startDestination: Screen = Screen.Auth) {
     val navController = rememberNavController()
+    val intentHandler = koinInject<IntentHandler>()
+    val navigateTo by intentHandler.navigateTo.collectAsState()
+
+    LaunchedEffect(navigateTo) {
+        navigateTo?.let { paymentCompleted ->
+            println("Navigating to PaymentCompleted")
+            navController.navigate(paymentCompleted)
+            intentHandler.resetNavigation()
+        }
+    }
+
     NavHost(
         navController = navController,
         startDestination = startDestination,

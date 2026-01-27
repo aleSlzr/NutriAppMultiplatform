@@ -57,10 +57,10 @@ class CheckoutViewModel(
         viewModelScope.launch {
             payPalAPI.fetchAccessToken(
                 onSuccess = { token ->
-
+                    println("PAYPAL TOKEN RECEIVED: $token")
                 },
                 onError = { message ->
-
+                    println("PAYPAL TOKEN ERROR: $message")
                 }
             )
         }

@@ -3,6 +3,7 @@ package org.alia.nutrisport.checkout.domain
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
@@ -12,10 +13,13 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headers
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.util.encodeBase64
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import openWebBrowser
 import org.alia.nutrisport.shared.ConstantKeys.PAYPAL_AUTH_ENDPOINT
 import org.alia.nutrisport.shared.ConstantKeys.PAYPAL_AUTH_KEY
 import org.alia.nutrisport.shared.ConstantKeys.PAYPAL_CHECKOUT_ENDPOINT
@@ -45,10 +49,8 @@ class PayPalAPI {
         try {
             val authKey = PAYPAL_AUTH_KEY.encodeBase64()
             val response = client.post(urlString = PAYPAL_AUTH_ENDPOINT) {
-                headers {
-                    append(HttpHeaders.Authorization, "Basic $authKey")
-                    append(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
-                }
+                header(HttpHeaders.Authorization, "Basic $authKey")
+                header(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
                 setBody("grant_type=client_credentials")
             }
             if (response.status == HttpStatusCode.OK) {
@@ -56,7 +58,7 @@ class PayPalAPI {
                 _accessToken.value = tokenResponse.accessToken
                 onSuccess(tokenResponse.accessToken)
             } else {
-                onError("Error while fetching access token ${response.status} - ${response.bodyAsText()}")
+                onError("Error while fetching access token: ${response.status} - ${response.bodyAsText()}")
             }
         } catch (e: Exception) {
             onError("Error while fetching access token: ${e.message}")
@@ -90,19 +92,37 @@ class PayPalAPI {
             ),
         )
         val response = client.post(urlString = PAYPAL_CHECKOUT_ENDPOINT) {
-            headers {
-                append(HttpHeaders.Authorization, "Bearer ${_accessToken.value}")
-                append(HttpHeaders.ContentType, ContentType.Application.Json.toString())
-                append("PayPal-Request-Id", uniqueId)
-            }
+            header(HttpHeaders.Authorization, "Bearer ${_accessToken.value}")
+            header(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+            header("PayPal-Request-Id", uniqueId)
             setBody(orderRequest)
         }
         if (response.status == HttpStatusCode.OK) {
             val orderResponse = response.body<OrderResponse>()
-            val payerLink = orderResponse.links.firstOrNull { it.rel == "payer-action" }?.href ?: ""
+            val payerLink = orderResponse.links.firstOrNull { it.rel == "payer-action" }?.href
+            withContext(Dispatchers.Main) {
+                handleUrl(
+                    url = payerLink,
+                    onSuccess = onSuccess,
+                    onError = onError,
+                )
+            }
             onSuccess()
         } else {
             onError("Error while starting the checkout: ${response.status} - ${response.bodyAsText()}")
         }
+    }
+
+    private fun handleUrl(
+        url: String?,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit,
+    ) {
+        if (url == null) {
+            onError("Error while opening a web browser: URL is null")
+            return
+        }
+        openWebBrowser(url = url)
+        onSuccess()
     }
 }

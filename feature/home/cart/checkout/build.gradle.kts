@@ -57,6 +57,8 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization)
 
+            implementation(libs.browser.kmp)
+
             // Dependency modules
             implementation(project(path = ":shared"))
             implementation(project(path = ":data"))

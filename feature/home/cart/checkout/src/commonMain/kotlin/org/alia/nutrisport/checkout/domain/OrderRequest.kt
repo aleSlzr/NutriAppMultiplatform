@@ -2,6 +2,8 @@ package org.alia.nutrisport.checkout.domain
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.alia.nutrisport.shared.ConstantKeys.CANCEL_URL
+import org.alia.nutrisport.shared.ConstantKeys.RETURN_URL
 
 @Serializable
 data class OrderRequest(
@@ -82,9 +84,9 @@ data class ExperienceContext(
     @SerialName("user_action")
     val userAction: String = "PAY_NOW",
     @SerialName("return_url")
-    val returnURL: String = "",
+    val returnURL: String = RETURN_URL,
     @SerialName("cancel_url")
-    val cancelURL: String = "",
+    val cancelURL: String = CANCEL_URL,
 )
 
 @Serializable

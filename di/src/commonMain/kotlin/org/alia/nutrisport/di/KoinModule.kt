@@ -18,6 +18,7 @@ import org.alia.nutrisport.details.DetailsViewModel
 import org.alia.nutrisport.manage_product.ManageProductViewModel
 import org.alia.nutrisport.products_overview.ProductsOverviewViewModel
 import org.alia.nutrisport.profile.ProfileViewModel
+import org.alia.nutrisport.shared.util.IntentHandler
 import org.aliaslzr.nutrisport.home.HomeGraphViewModel
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
@@ -31,6 +32,7 @@ val sharedModule = module {
     single<ProductRepository> { ProductRepositoryImpl() }
     single<OrderRepository> { OrderRepositoryImpl(get()) }
     single<PayPalAPI> { PayPalAPI() }
+    single<IntentHandler> { IntentHandler() }
     viewModelOf(::AuthViewModel)
     viewModelOf(::HomeGraphViewModel)
     viewModelOf(::ProfileViewModel)

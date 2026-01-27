@@ -40,6 +40,10 @@ kotlin {
             // Libraries used
             implementation(libs.kotlinx.serialization)
             implementation(libs.compose.navigation)
+
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+
             // Dependency modules
             implementation(project(path = ":feature:auth"))
             implementation(project(path = ":feature:home"))
