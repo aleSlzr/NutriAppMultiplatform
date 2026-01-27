@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.alia.nutrisport.checkout.domain.Amount
 import org.alia.nutrisport.checkout.domain.PayPalAPI
+import org.alia.nutrisport.checkout.domain.ShippingAddress
 import org.alia.nutrisport.data.domain.CustomerRepository
 import org.alia.nutrisport.data.domain.OrderRepository
 import org.alia.nutrisport.shared.domain.CartItem
@@ -178,6 +180,33 @@ class CheckoutViewModel(
                 onSuccess = onSuccess,
                 onError = onError,
             )
+        }
+    }
+    
+    fun payWithPaypal(
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit,
+    ) {
+        val totalAmount = savedStateHandle.get<String>("totalAmount")
+        if (totalAmount != null) {
+            viewModelScope.launch {
+                payPalAPI.beginCheckout(
+                    amount = Amount(
+                        currencyCode = "USD",
+                        value = totalAmount
+                    ),
+                    fullName = "${screenState.firstName} ${screenState.lastName}",
+                    shippingAddress = ShippingAddress(
+                        addressLine1 = screenState.address ?: "Unknown address",
+                        state = screenState.country.name,
+                        city = screenState.city ?: "Unknown city ",
+                        postalCode = screenState.postalCode.toString(),
+                        countryCode = screenState.country.code,
+                    ),
+                    onSuccess = onSuccess,
+                    onError = onError,
+                )
+            }
         }
     }
 }
