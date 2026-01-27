@@ -13,15 +13,19 @@ import androidx.compose.ui.unit.dp
 import org.alia.nutrisport.shared.Resources
 import org.alia.nutrisport.shared.Surface
 import org.alia.nutrisport.shared.component.InfoCard
+import org.alia.nutrisport.shared.component.LoadingCard
 import org.alia.nutrisport.shared.component.PrimaryButton
+import org.alia.nutrisport.shared.util.DisplayResult
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun PaymentCompletedScreen(
     modifier: Modifier = Modifier,
     navigateBack: () -> Unit,
-    isSuccess: Boolean?,
-    error: String?,
 ) {
+    val viewModel = koinViewModel<PaymentCompletedViewModel>()
+    val screenState = viewModel.screenState
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -29,20 +33,46 @@ fun PaymentCompletedScreen(
             .systemBarsPadding()
             .padding(all = 24.dp)
     ) {
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.Center,
-        ) {
-            InfoCard(
-                title = if (isSuccess != null) "Success" else "Oops!",
-                subtitle = if (isSuccess != null) "Your purchase is on the way" else error ?: "Unknown error.",
-                image = if (isSuccess != null) Resources.Image.Success else Resources.Image.Cat,
-            )
-        }
-        PrimaryButton(
-            text = "Go back",
-            icon = Resources.Icon.RightArrow,
-            onClick = navigateBack,
+        screenState.DisplayResult(
+            onLoading = { LoadingCard(modifier = Modifier.fillMaxSize()) },
+            onError = { message ->
+                Column {
+                    Box(
+                        modifier = Modifier.weight(1f),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        InfoCard(
+                            title = "Oops!",
+                            subtitle = message,
+                            image = Resources.Image.Cat,
+                        )
+                    }
+                    PrimaryButton(
+                        text = "Go back",
+                        icon = Resources.Icon.RightArrow,
+                        onClick = navigateBack,
+                    )
+                }
+            },
+            onSuccess = {
+                Column {
+                    Box(
+                        modifier = Modifier.weight(1f),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        InfoCard(
+                            title = "Success",
+                            subtitle = "Your purchase is on the way",
+                            image = Resources.Image.Success,
+                        )
+                    }
+                    PrimaryButton(
+                        text = "Go back",
+                        icon = Resources.Icon.RightArrow,
+                        onClick = navigateBack,
+                    )
+                }
+            },
         )
     }
 }

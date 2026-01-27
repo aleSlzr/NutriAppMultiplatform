@@ -131,8 +131,6 @@ fun NavGraph(startDestination: Screen = Screen.Auth) {
             )
         }
         composable<Screen.PaymentCompleted> {
-            val isSuccess = it.toRoute<Screen.PaymentCompleted>().isSuccess
-            val error = it.toRoute<Screen.PaymentCompleted>().error
             PaymentCompletedScreen(
                 navigateBack = {
                     navController.navigate(Screen.HomeGraph) {
@@ -141,8 +139,6 @@ fun NavGraph(startDestination: Screen = Screen.Auth) {
                         popUpTo(0) { inclusive = true }
                     }
                 },
-                isSuccess = isSuccess,
-                error = error,
             )
         }
     }

@@ -38,5 +38,6 @@ sealed class Screen {
     data class PaymentCompleted(
         val isSuccess: Boolean? = null,
         val error: String? = null,
+        val token: String? = null,
     ) : Screen()
 }

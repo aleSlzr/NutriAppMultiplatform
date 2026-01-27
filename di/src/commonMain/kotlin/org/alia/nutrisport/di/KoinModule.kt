@@ -16,6 +16,7 @@ import org.alia.nutrisport.data.domain.OrderRepository
 import org.alia.nutrisport.data.domain.ProductRepository
 import org.alia.nutrisport.details.DetailsViewModel
 import org.alia.nutrisport.manage_product.ManageProductViewModel
+import org.alia.nutrisport.payment_completed.PaymentCompletedViewModel
 import org.alia.nutrisport.products_overview.ProductsOverviewViewModel
 import org.alia.nutrisport.profile.ProfileViewModel
 import org.alia.nutrisport.shared.util.IntentHandler
@@ -43,6 +44,7 @@ val sharedModule = module {
     viewModelOf(::CartViewModel)
     viewModelOf(::CategorySearchViewModel)
     viewModelOf(::CheckoutViewModel)
+    viewModelOf(::PaymentCompletedViewModel)
 }
 
 expect val targetModule: Module
