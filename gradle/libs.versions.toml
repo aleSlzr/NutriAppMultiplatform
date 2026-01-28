@@ -81,7 +81,7 @@ messagebar_kmp = { module = "com.stevdza-san:messagebarkmp", version.ref = "mess
 browser_kmp = { module = "com.stevdza-san:browser-kmp", version.ref = "browser_version" }
 
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "settings_version" }
-multiplatform-settings-no-args = { module = "com.russhwolf:multiplatform-settings-no-args", version.ref = "settings_version" }
+multiplatform-settings-no-args = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "settings_version" }
 multiplatform-settings-make-observable = { module = "com.russhwolf:multiplatform-settings-make-observable", version.ref = "settings_version" }
 
 [plugins]

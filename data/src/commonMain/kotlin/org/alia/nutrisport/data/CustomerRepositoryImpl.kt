@@ -189,7 +189,7 @@ class CustomerRepositoryImpl: CustomerRepository {
                 onError("User is not available.")
             }
         } catch (e: Exception) {
-            onError("Error while adding a product to cart: ${e.message}")
+            onError("Error while updating product quantity to cart: ${e.message}")
         }
     }
 
@@ -222,7 +222,7 @@ class CustomerRepositoryImpl: CustomerRepository {
                 onError("User is not available.")
             }
         } catch (e: Exception) {
-            onError("Error while adding a product to cart: ${e.message}")
+            onError("Error while deleting a product from cart: ${e.message}")
         }
     }
 
@@ -251,7 +251,7 @@ class CustomerRepositoryImpl: CustomerRepository {
                 onError("User is not available.")
             }
         } catch (e: Exception) {
-            onError("Error while adding a product to cart: ${e.message}")
+            onError("Error while deleting all products from cart: ${e.message}")
         }
     }
 
